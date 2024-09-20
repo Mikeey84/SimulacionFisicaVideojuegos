@@ -56,7 +56,7 @@ void initPhysics(bool interactive)
 
 	PxShape* sph = CreateShape(PxSphereGeometry(5), gMaterial);
 	RenderItem* sSphere = new RenderItem(sph, &PxTransform{ 0,0,0 }, Vector4{ 1,1,1,1 });
-
+	
 	gScene = gPhysics->createScene(sceneDesc);
 	}
 
