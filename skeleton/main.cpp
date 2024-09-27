@@ -8,6 +8,7 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 #include "Vector3D.cpp"
+#include "Particle.h"
 #include <iostream>
 
 std::string display_text = "This is a test";
@@ -34,7 +35,7 @@ RenderItem* sSphere;
 RenderItem* sSphereRed;
 RenderItem* sSphereGreen;
 RenderItem* sSphereBlue;
-
+Particle* sParticle;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -89,10 +90,15 @@ void initPhysics(bool interactive)
 	sSphereBlue->color = Vector4{ 0,0,1,1 };
 	sSphereBlue->shape = CreateShape(geo);
 
-	RegisterRenderItem(sSphere);
+
+	sParticle = new Particle(PxVec3(0,0,0), PxVec3(5, 0, 0), PxVec3(0,1,0));
+
+
+	//Registers
+	/*RegisterRenderItem(sSphere);
 	RegisterRenderItem(sSphereRed);
 	RegisterRenderItem(sSphereGreen);
-	RegisterRenderItem(sSphereBlue);
+	RegisterRenderItem(sSphereBlue);*/
 	
 	}
 
@@ -100,12 +106,12 @@ void initPhysics(bool interactive)
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
 // t: time passed since last call in milliseconds
-void stepPhysics(bool interactive, double t)
+void stepPhysics(bool interactive, double t) // pasar la t
 {
 	PX_UNUSED(interactive);
-	
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+	sParticle->integrate(t);
 }
 
 // Function to clean data
@@ -123,10 +129,10 @@ void cleanupPhysics(bool interactive)
 	gPvd->release();
 	transport->release();
 	
-	DeregisterRenderItem(sSphere);
+	/*DeregisterRenderItem(sSphere);
 	DeregisterRenderItem(sSphereRed);
 	DeregisterRenderItem(sSphereGreen);
-	DeregisterRenderItem(sSphereBlue);
+	DeregisterRenderItem(sSphereBlue);*/
 	gFoundation->release();
 	}
 

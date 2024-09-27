@@ -42,6 +42,8 @@ public:
 		return Vector3D((_y * v._z - _z * v._y), (_z * v._x - v._z * -_x), _x * v._y - v._x - _y);
 	}
 	void operator=(const Vector3D& v) {
-		this = v;
+		_x = v._x;
+		_y = v._y;
+		_z = v._z;
 	}
 };
