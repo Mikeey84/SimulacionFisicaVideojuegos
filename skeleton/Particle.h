@@ -18,7 +18,7 @@ public:
 
 	void integrate(double t);
 
-private:
+
 	PxVec3 _vel;
 	PxTransform* _pose;
 	PxVec3 _pos;

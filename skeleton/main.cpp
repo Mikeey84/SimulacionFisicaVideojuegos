@@ -9,6 +9,7 @@
 #include "callbacks.hpp"
 #include "Vector3D.cpp"
 #include "Particle.h"
+#include "Proyectil.h"
 #include <iostream>
 
 std::string display_text = "This is a test";
@@ -36,6 +37,7 @@ RenderItem* sSphereRed;
 RenderItem* sSphereGreen;
 RenderItem* sSphereBlue;
 Particle* sParticle;
+std::vector<Proyectil*> sProyectiles;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -91,7 +93,7 @@ void initPhysics(bool interactive)
 	sSphereBlue->shape = CreateShape(geo);
 
 
-	sParticle = new Particle(PxVec3(0,0,0), PxVec3(5, 0, 0), PxVec3(0,1,0));
+	//sParticle = new Particle(PxVec3(0,0,0), PxVec3(3, 0, 0), PxVec3(0,5,0));
 
 
 	//Registers
@@ -100,7 +102,7 @@ void initPhysics(bool interactive)
 	RegisterRenderItem(sSphereGreen);
 	RegisterRenderItem(sSphereBlue);*/
 	
-	}
+}
 
 
 // Function to configure what happens in each step of physics
@@ -111,7 +113,10 @@ void stepPhysics(bool interactive, double t) // pasar la t
 	PX_UNUSED(interactive);
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	sParticle->integrate(t);
+	//sParticle->integrate(t);
+	for (Proyectil* e : sProyectiles) {
+		e->_particle->integrate(t);
+	}
 }
 
 // Function to clean data
@@ -145,6 +150,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	//case 'B': break;
 	//case ' ':	break;
+	case 'P':
+		
+		sProyectiles.push_back(new Proyectil(GetCamera()->getTransform(), GetCamera()->getDir(), 50, 10, 1));
+		break;
 	case ' ':
 	{
 		break;
