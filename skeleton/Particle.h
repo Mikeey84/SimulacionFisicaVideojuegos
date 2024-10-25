@@ -10,7 +10,7 @@ using namespace physx;
 
 class Particle {
 public:
-	Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime);
+	Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime, Vector4 color = Vector4{1,1,1,1});
 	~Particle() {
 		DeregisterRenderItem(_renderItem); //deregistrar el item
 		//delete _renderItem;
@@ -24,7 +24,7 @@ public:
 	PxTransform* _pose;
 	PxVec3 _pos;
 	PxVec3 _acc;
-	PxVec4 _color = { 1,1,1,1 };
+	PxVec4 _color;
 	double _maxDis;
 	RenderItem* _renderItem = nullptr;
 	float _damping;

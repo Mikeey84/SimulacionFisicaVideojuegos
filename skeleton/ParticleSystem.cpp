@@ -25,8 +25,8 @@ void ParticleSystem::update(double t) {
 	_particlesToErase.clear();
 }
 
-void ParticleSystem::addParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime) {
-	_particles.push_back(new Particle(pos, vel, acc, maxDis, maxTime));
+void ParticleSystem::addParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime, Vector4 color) {
+	_particles.push_back(new Particle(pos, vel, acc, maxDis, maxTime, color));
 }
 
 

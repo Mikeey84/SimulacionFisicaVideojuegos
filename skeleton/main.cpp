@@ -102,7 +102,7 @@ void initPhysics(bool interactive)
 	sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.1, 100, 10, -5, 5, 20, 25, -5, 5);
 
 	sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(-50,0,50), 0.1, 500, 10, 2, 2, 0, 2, 15, 2);
-
+	sParticleSystem->_generators[1]->changeColor(Vector4{ 1, 0, 1, 0 });
 	sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(100,0,50), 0.1, 1000, 10, 0,10, 0,0, 0 ,10);
 
 	//Registers

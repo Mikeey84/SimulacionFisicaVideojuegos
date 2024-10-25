@@ -1,12 +1,12 @@
 #include "Particle.h"
 
 
-Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime) :
+Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime, Vector4 color) :
 	_pos(pos), _vel(vel), _acc(acc), _maxDis(maxDis), _maxTime(maxTime)
 	{
 		PxSphereGeometry geo(1);
 		PxShape* shape = CreateShape(geo);
-
+		_color = color;
 		_pose = new physx::PxTransform(_pos);
 		_renderItem = new RenderItem(shape, _pose, _color);
 		RegisterRenderItem(_renderItem);
