@@ -13,6 +13,8 @@
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Proyectil.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="Generator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -26,6 +28,8 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Proyectil.h" />
+    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="Generator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

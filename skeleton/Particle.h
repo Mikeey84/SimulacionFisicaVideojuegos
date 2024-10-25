@@ -10,19 +10,23 @@ using namespace physx;
 
 class Particle {
 public:
-	Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc);
+	Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime);
 	~Particle() {
 		DeregisterRenderItem(_renderItem); //deregistrar el item
-		delete _renderItem;
+		//delete _renderItem;
+		_renderItem = nullptr;
 	};
 
 	void integrate(double t);
-
+	bool checkDeath();
 
 	PxVec3 _vel;
 	PxTransform* _pose;
 	PxVec3 _pos;
 	PxVec3 _acc;
+	PxVec4 _color = { 1,1,1,1 };
+	double _maxDis;
 	RenderItem* _renderItem = nullptr;
 	float _damping;
+	double _time = 0, _maxTime;
 };
