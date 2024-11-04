@@ -18,8 +18,8 @@ void Generator::update(double t) {
 	if (_lastTimeAdd > _time) {
 		switch (_type) {
 		case UNIFORM:
-			_pS->addParticles(_pos, { generateUniform(_x1,_y1), generateUniform(_x2,_y2), generateUniform(_x3,_y3)}, {0.0f,-10.0f,0.0f}, _maxDis, _maxTime, _c);
-			
+			_pS->addParticles(_pos, { generateUniform(_x1,_y1), generateUniform(_x2,_y2), generateUniform(_x3,_y3) }, { 0.0f,-10.0f,0.0f }, _maxDis, _maxTime, _c);
+
 			_lastTimeAdd = 0;
 			break;
 		case GAUSS:
@@ -29,7 +29,6 @@ void Generator::update(double t) {
 			break;
 		}
 	}
-	
 }
 
 float Generator::generateGauss(float mean, float dev) {

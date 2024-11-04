@@ -3,6 +3,7 @@
 #include "PxPhysics.h"
 #include "PxPhysicsAPI.h"
 #include "RenderUtils.hpp"
+#include "Particle.h"
 
 class ParticleSystem;
 
@@ -23,7 +24,7 @@ public:
 	Type _type;
 	PxVec3 _pos;
 	double _time, _maxDis, _maxTime, _lastTimeAdd = 0;
-	Vector4 _c = { 1,1,1,1 };
+	Vector4 _c = {1,1,1,1};
 	double _x1, _x2, _x3, _y1, _y2, _y3;
 
 	ParticleSystem* _pS;
@@ -32,5 +33,6 @@ public:
 	void changeColor(Vector4 color) {
 		_c = color;
 	};
+
 };
 
