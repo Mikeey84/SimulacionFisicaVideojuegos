@@ -13,7 +13,7 @@ Proyectil::Proyectil(PxTransform camera, PxVec3 dir, float  vel, float m, float 
 	
 	// Modificar la gravedad
 	_gS = GRAVEDAD * pow(vs2,2) / pow(_v, 2);
-	_particle = new Particle(camera.p, _vS, PxVec3(0, _gS, 0), 0, 0);
+	_particle = new Particle(camera.p, _vS, PxVec3(0, _gS, 0), 0, 10, 0);
 }
 
 void Proyectil::Escalado(float escalar) {

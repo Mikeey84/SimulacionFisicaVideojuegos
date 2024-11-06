@@ -1,8 +1,8 @@
 #include "Particle.h"
 
 
-Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, Vector4 color) :
-	_pos(pos), _vel(vel), _acc(acc), _maxDis(maxDis), _maxTime(maxTime)
+Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, float mass, Vector4 color) :
+	_pos(pos), _vel(vel), _acc(acc), _maxDis(maxDis), _maxTime(maxTime), _mass(mass)
 	{
 		PxSphereGeometry geo(1);
 		PxShape* shape = CreateShape(geo);
@@ -17,10 +17,20 @@ Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxT
 
 
 void Particle::integrate(double t) { // t = tiempo de simulacion 
+
+	// Movimiento de particula con velocidad
 	_time += t;
 	_pos = _pos + _vel * t;
+
+	// Añadir las fuerzas a la aceleracion
+	_acc = _forces / _mass ;
+	
+	// Calculo velocidad
 	_vel = _vel * pow(_damping, t) + _acc * t;
+
+	// Aplicacion del movimiento de la particula 
 	_pose.p = physx::PxVec3(_pos);
+
 }
 
 bool Particle::checkDeath()
@@ -31,6 +41,10 @@ bool Particle::checkDeath()
 
 bool Particle::checkDis() {
 	return (abs(_pos.x) > _area.x || abs(_pos.y) > _area.x || abs(_pos.z) > _area.x);
+}
+
+void Particle::addForce(Vector3 newForce) { // Metodo que añade lña nueva fuerza para que se aplique
+	_forces += newForce;
 }
 
 
