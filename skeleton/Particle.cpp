@@ -31,6 +31,9 @@ void Particle::integrate(double t) { // t = tiempo de simulacion
 	// Aplicacion del movimiento de la particula 
 	_pose.p = physx::PxVec3(_pos);
 
+	// Reset de acumulador de fuerzas
+	this->_forces = { 0,0,0 }; 
+
 }
 
 bool Particle::checkDeath()
