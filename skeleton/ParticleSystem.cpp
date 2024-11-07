@@ -48,6 +48,9 @@ void ParticleSystem::addForceGenerator(ForceType fT, Vector3 pos, Vector3 area, 
 	case ParticleSystem::WIND:
 		_forceGenerators.push_back(new WindGenerator(this, pos, area, gravity_speed, k1, k2, easy));
 		break;
+	case ParticleSystem::WHIRLWIND:
+		_forceGenerators.push_back(new WhirlwindGenerator(this, pos, area, k1));
+		break;
 	default:
 		break;
 	}

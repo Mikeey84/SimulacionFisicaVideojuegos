@@ -5,6 +5,7 @@
 #include "ForceGenerator.h"
 #include "GravityGenerator.h"
 #include "WindGenerator.h"
+#include "WhirlwindGenerator.h"
 using namespace std;
 
 class ParticleSystem
@@ -13,7 +14,8 @@ public:
 	enum ForceType
 	{
 		GRAVITY,
-		WIND
+		WIND,
+		WHIRLWIND
 
 	};
 

@@ -10,6 +10,6 @@ public:
 	~GravityGenerator() {};
 	void update(double t) override;
 	Vector3 _gravity; 
-	ParticleSystem* _pS;
+	ParticleSystem* _pS = nullptr;
 };
 
