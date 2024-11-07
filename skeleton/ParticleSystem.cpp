@@ -39,11 +39,14 @@ void ParticleSystem::addGenerator(Generator::Type type, PxVec3 pos, double time,
 	_generators.push_back(new Generator(this, type, pos, time, maxTime, maxDis, x1, y1, x2, y2, x3, y3, mass));
 }
 
-void ParticleSystem::addForceGenerator(ForceType fT, Vector3 pos, Vector3 area, Vector3 force) {
+void ParticleSystem::addForceGenerator(ForceType fT, Vector3 pos, Vector3 area, Vector3 gravity_speed, float k1, float k2, bool easy) {
 	switch (fT)
 	{
 	case ParticleSystem::GRAVITY:
-		_forceGenerators.push_back(new GravityGenerator(this, pos, area, force));
+		_forceGenerators.push_back(new GravityGenerator(this, pos, area, gravity_speed));
+		break;
+	case ParticleSystem::WIND:
+		_forceGenerators.push_back(new WindGenerator(this, pos, area, gravity_speed, k1, k2, easy));
 		break;
 	default:
 		break;

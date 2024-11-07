@@ -99,17 +99,18 @@ void initPhysics(bool interactive)
 
 	sParticleSystem = new ParticleSystem();
 
-	sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.01, 10, 100, -5, 5, 20, 25, -5, 5, 1);
+	sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.01, 10, 10000, -1, 1, 20, 25, -1, 1, 1);
 	//sParticleSystem->_generators[0]->changeColor(Vector4{ 1, 0, 1, 1 });
 
-	sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(-50,0,50), 0.1, 10, 100, 2, 2, 0, 2, 15, 2, 100);
+	/*sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(-50,0,50), 0.1, 10, 100, 2, 2, 0, 2, 15, 2, 100);
 	sParticleSystem->_generators[1]->changeColor(Vector4{ 1, 0, 1, 1 });
 
 	sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(100,0,-50), 0.1, 10, 100, 0,10, 0,0, 0 ,10, 10);
-	sParticleSystem->_generators[2]->changeColor(Vector4{ 0, 0, 1, 1 });
+	sParticleSystem->_generators[2]->changeColor(Vector4{ 0, 0, 1, 1 });*/
 
-	sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0,0,0), Vector3(10000,10000,10000), Vector3(0, -10, 0));
-	sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0,0,0), Vector3(10000,10000,10000), Vector3(0, 50, 0));
+	/*sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, -10, 0), 0, 0);
+	sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, 50, 0), 0, 0);*/
+	sParticleSystem->addForceGenerator(ParticleSystem::ForceType::WIND, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(30, 0, 0), 0.2, 0, true);
 	//Registers
 	/*RegisterRenderItem(sSphere);
 	RegisterRenderItem(sSphereRed);
