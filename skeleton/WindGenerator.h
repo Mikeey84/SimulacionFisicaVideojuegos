@@ -6,8 +6,8 @@ class ParticleSystem;
 class WindGenerator : public ForceGenerator
 {
 public:
-	WindGenerator(ParticleSystem* pS, Vector3 pos, Vector3 area, Vector3 windSpeed, float k1, float k2, bool eazy);
-	void update(double t) override;
+	WindGenerator(ParticleSystem* pS, Vector3 pos, Vector3 area, Vector3 windSpeed, float k1, float k2, bool easy);
+	void update(double t, Particle* p) override;
 
 	float areaOfObject(float radius);
 	Vector3 _windSpeed;

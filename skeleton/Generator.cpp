@@ -2,8 +2,8 @@
 #include "ParticleSystem.h"
 
 Generator::Generator(ParticleSystem* pS, Type type, PxVec3 pos, double time, double maxDis, double maxTime, 
-	float x1, float y1, float x2, float y2, float x3, float y3, float mass) :
-	_pS(pS), _type(type), _pos(pos), _time(time), _maxDis(maxDis), _maxTime(maxTime), _mass(mass)
+	float x1, float y1, float x2, float y2, float x3, float y3, float mass, ForceGenerator* fG) :
+	_pS(pS), _type(type), _pos(pos), _time(time), _maxDis(maxDis), _maxTime(maxTime), _mass(mass), _fG(fG)
 {
 	_x1 = x1;
 	_y1 = y1;
@@ -18,12 +18,12 @@ void Generator::update(double t) {
 	if (_lastTimeAdd > _time) {
 		switch (_type) {
 		case UNIFORM:
-			_pS->addParticles(_pos, { generateUniform(_x1,_y1), generateUniform(_x2,_y2), generateUniform(_x3,_y3) }, { 0.0f,0.0f,0.0f }, _maxDis, _maxTime, _c, _mass);
+			_pS->addParticles(_pos, { generateUniform(_x1,_y1), generateUniform(_x2,_y2), generateUniform(_x3,_y3) }, { 0.0f,0.0f,0.0f }, _maxDis, _maxTime, _c, _mass, _fG);
 
 			_lastTimeAdd = 0;
 			break;
 		case GAUSS:
-			_pS->addParticles(_pos, { generateGauss(_x1, _y1), generateGauss(_x2,_y2), generateGauss(_x3, _y3) }, { 0.0f,0.0f,0.0f }, _maxDis, _maxTime, _c, _mass);
+			_pS->addParticles(_pos, { generateGauss(_x1, _y1), generateGauss(_x2,_y2), generateGauss(_x3, _y3) }, { 0.0f,0.0f,0.0f }, _maxDis, _maxTime, _c, _mass, _fG);
 
 			_lastTimeAdd = 0;
 			break;

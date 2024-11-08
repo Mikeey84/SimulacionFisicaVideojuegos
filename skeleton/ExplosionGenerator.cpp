@@ -5,7 +5,7 @@ ExplosionGenerator::ExplosionGenerator(ParticleSystem* pS, Vector3 pos, Vector3 
 _k(k), _t(t), _tau(tau) {
 }
 
-void ExplosionGenerator::update(double t) {
+void ExplosionGenerator::update(double t, Particle* p) {
 
     //for (int i = 0; i < _pS->_particles.size(); ++i) {
     //    const Vector3 pPos = _pS->_particles[i]->_pos;
@@ -41,26 +41,25 @@ void ExplosionGenerator::update(double t) {
 
     double factor_tiempo = exp(-_t / _tau);
 
-    for (int i = 0; i < _pS->_particles.size(); ++i) { 
-        Vector3 posParticula = _pS->_particles[i]->_pos;
-        if (checkCircleArea(_pS->_particles[i]->_pos)) {
+    
+    Vector3 posParticula = p->_pos;
            
-            Vector3 distancia = posParticula - _pos; 
-            double r = distancia.magnitude(); 
+        Vector3 distancia = posParticula - _pos; 
+        double r = distancia.magnitude(); 
 
-            double factor_fuerza = (_k / (r * r)) * factor_tiempo;
+        double factor_fuerza = (_k / (r * r)) * factor_tiempo;
 
-            Vector3 direccion = {
-                distancia.x / distancia.magnitude(),
-                distancia.y / distancia.magnitude(),
-                distancia.z / distancia.magnitude()
-            };
+        Vector3 direccion = {
+            distancia.x / distancia.magnitude(),
+            distancia.y / distancia.magnitude(),
+            distancia.z / distancia.magnitude()
+        };
 
-            _force = direccion * factor_fuerza;
+        _force = direccion * factor_fuerza;
 
-            // Aplicar la fuerza a la partícula
-            _pS->_particles[i]->addForce(_force);
-        }
-    }
+        // Aplicar la fuerza a la partícula
+        p->addForce(_force);
+    
+    
     _t += t;
 }

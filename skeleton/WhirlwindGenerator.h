@@ -8,7 +8,7 @@ class WhirlwindGenerator : public ForceGenerator
 public:
 	WhirlwindGenerator(ParticleSystem* pS, Vector3 pos, Vector3 area, float k);
 
-	void update(double t) override;
+	void update(double t, Particle* p) override;
 
 	ParticleSystem* _pS = nullptr;
 	float _k;

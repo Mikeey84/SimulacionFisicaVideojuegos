@@ -8,7 +8,7 @@ class ExplosionGenerator : public ForceGenerator
 public:
 	ExplosionGenerator(ParticleSystem* pS, Vector3 pos, Vector3 area, float k, double t, double tau);
 
-	void update(double t) override;
+	void update(double t, Particle* p) override;
 
 	ParticleSystem* _pS;
 
