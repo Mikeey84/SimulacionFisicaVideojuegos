@@ -12,6 +12,5 @@ public:
 
 	ParticleSystem* _pS = nullptr;
 	float _k;
-	Vector3 _force;
 };
 

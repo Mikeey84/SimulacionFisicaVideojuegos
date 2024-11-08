@@ -39,7 +39,7 @@ void ParticleSystem::addGenerator(Generator::Type type, PxVec3 pos, double time,
 	_generators.push_back(new Generator(this, type, pos, time, maxTime, maxDis, x1, y1, x2, y2, x3, y3, mass));
 }
 
-void ParticleSystem::addForceGenerator(ForceType fT, Vector3 pos, Vector3 area, Vector3 gravity_speed, float k1, float k2, bool easy) {
+void ParticleSystem::addForceGenerator(ForceType fT, Vector3 pos, Vector3 area, Vector3 gravity_speed, float k1, float k2, bool easy, double t, double tau) {
 	switch (fT)
 	{
 	case ParticleSystem::GRAVITY:
@@ -50,6 +50,9 @@ void ParticleSystem::addForceGenerator(ForceType fT, Vector3 pos, Vector3 area, 
 		break;
 	case ParticleSystem::WHIRLWIND:
 		_forceGenerators.push_back(new WhirlwindGenerator(this, pos, area, k1));
+		break;
+	case ParticleSystem::EXPLOSION:
+		_forceGenerators.push_back(new ExplosionGenerator(this, pos, area, k1, t, tau));
 		break;
 	default:
 		break;

@@ -14,3 +14,9 @@ bool ForceGenerator::checkArea(Vector3 pos) {
 		(pos.y >= -y && pos.y <= y) &&
 		(pos.z >= -z && pos.z <= z);
 }
+
+bool ForceGenerator::checkCircleArea(Vector3 pos)
+{
+	// Si la distancia entre la particula y el origen es menor que el radio (area.x) devuelve que esta en rango
+	return (pos - _pos).magnitude() < _area.x;
+}

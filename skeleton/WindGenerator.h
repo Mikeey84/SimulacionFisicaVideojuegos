@@ -11,7 +11,7 @@ public:
 
 	float areaOfObject(float radius);
 	Vector3 _windSpeed;
-	Vector3 _force;
+	
 	ParticleSystem* _pS = nullptr;
 	float _k1, _k2;
 	bool _easy;

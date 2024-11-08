@@ -100,6 +100,7 @@ void initPhysics(bool interactive)
 	sParticleSystem = new ParticleSystem();
 
 	//sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.01, 100, 10000, -1, 1, 20, 25, -1, 1, 1);
+	//sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.005, 100, 10000, -1, 1, 20, 25, -1, 1, 1);
 	//sParticleSystem->_generators[0]->changeColor(Vector4{ 1, 0, 1, 1 });
 
 	/*sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(-50,0,50), 0.1, 10, 100, 2, 2, 0, 2, 15, 2, 100);
@@ -108,12 +109,13 @@ void initPhysics(bool interactive)
 	/*sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(0,0,0), 0.1, 1000, 10000, 0,10, 0,0, 0 ,10, 10);
 	sParticleSystem->_generators[0]->changeColor(Vector4{ 0, 0, 1, 1 });*/
 	
-	sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0, 0, 0), 0.005, 100, 10000, -2, 2, 0, 0, -2, 2, 1);
-
-	/*sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, -10, 0), 0, 0, false);
-	sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, 50, 0), 0, 0, false);
-	sParticleSystem->addForceGenerator(ParticleSystem::ForceType::WIND, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(30, 0, 0), 0.2, 0, true);*/
-	sParticleSystem->addForceGenerator(ParticleSystem::ForceType::WHIRLWIND, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, 0, 0), 0.06, 0, false);
+	//sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0, 0, 0), 0.005, 100, 10000, -2, 2, 0, 0, -2, 2, 1);
+	//sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0, 0, 0), 0.1, 100, 10000, -0.9, 0.9, -0.9, 0.9, -0.9, 0.9, 1);
+	//sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(0,0,0), 0.1, 1000, 10000, 0,1, 0,0, 0 ,1, 10);
+	//sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, -10, 0), 0, 0, false, 0, 0);
+	//sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, 50, 0), 0, 0, false, 0, 0);
+	//sParticleSystem->addForceGenerator(ParticleSystem::ForceType::WIND, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(30, 0, 0), 0.2, 0, true, 0, 0);
+	//sParticleSystem->addForceGenerator(ParticleSystem::ForceType::WHIRLWIND, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, 0, 0), 0.06, 0, false, 0, 0);
 	//Registers
 	/*RegisterRenderItem(sSphere);
 	RegisterRenderItem(sSphereRed);
@@ -177,6 +179,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case 'P':
 		sProyectiles.push_back(new Proyectil(GetCamera()->getTransform(), GetCamera()->getDir(), 50, 10, 1));
+		break;
+	case 'E':
+		sParticleSystem->addForceGenerator(ParticleSystem::ForceType::EXPLOSION, Vector3(0, 20, 0), Vector3(500, 0, 0), Vector3(0, 0, 0), 1000, 0, false, 0, 0.1);
 		break;
 	case ' ':
 	{

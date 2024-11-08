@@ -13,6 +13,8 @@ public:
 	
 	virtual void update(double t) = 0;
 	bool checkArea(Vector3 pos);
+	bool checkCircleArea(Vector3 pos);
+	Vector3 _force;
 protected:
 	Vector3 _pos;
 	Vector3 _area;
