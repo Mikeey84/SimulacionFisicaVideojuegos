@@ -13,6 +13,20 @@ Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxT
 		RegisterRenderItem(_renderItem);
 		_damping = 0.99;
 	}
+
+Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, float mass, Type type) : 
+	_pos(pos), _vel(vel), _acc(acc), _maxDis(maxDis), _maxTime(maxTime), _mass(mass) {
+	if (type == Type::BOX) {
+		PxBoxGeometry geo(1,1,1); 
+		PxShape* shape = CreateShape(geo);
+		_color = { 1,1,1,1 };
+		_area = { abs(pos.x) + _maxDis, abs(pos.y) + _maxDis , abs(pos.z) + _maxDis };
+		_pose = physx::PxTransform(_pos);
+		_renderItem = new RenderItem(shape, &_pose, _color);
+		RegisterRenderItem(_renderItem);
+		_damping = 0.99;
+	}
+}
 	
 
 

@@ -15,7 +15,6 @@ void ParticleSystem::update(double t) {
 		p->integrate(t);
 		checkDeath(p);
 	}
-	
 
 	for (Particle* p : _particlesToErase) {
 		auto it = find(_particles.begin(), _particles.end(), p);
@@ -63,6 +62,38 @@ void ParticleSystem::checkDeath(Particle* p) {
 	if (p->checkDeath()) _particlesToErase.push_back(p);
 	else if(p->checkDis()) _particlesToErase.push_back(p);
 }
+
+void ParticleSystem::generateSpringDemo() {
+	Particle* p1 = new Particle({-10,10,0},{0,0,0}, {0,0,0}, 200, 10000, 0.85, {1,1,1,1});
+	Particle* p2 = new Particle({ 10,10,0 }, { 0,0,0 }, { 0,0,0 }, 200, 10000, 0.85, { 1,1,1,1 });
+	
+	p2->_mass = 2;
+	SpringForceGenerator* f1 = new SpringForceGenerator(this,1.5, 25, p2);
+	SpringForceGenerator* f2 = new SpringForceGenerator(this, 1.5, 25, p1);
+
+	_particles.push_back(p1);
+	_particles.push_back(p2);
+
+	vector<ForceGenerator*> _f1;
+	_f1.push_back(f1);
+	vector<ForceGenerator*> _f2;
+	_f2.push_back(f2);
+
+	p1->addForceGenerator(_f1);
+	p2->addForceGenerator(_f2);
+
+	
+	Particle* p3 = new Particle({ -10,20,0 }, { 0,0,0 }, { 0,0,0 }, 200, 10000, 0.85, { 1,1,1,1 });
+	AnchoredSpringFG* f3 = new AnchoredSpringFG(this, 1.5, 10, { -10.0,40.0,0.0 });
+	_particles.push_back(p3);
+	vector<ForceGenerator*> _f3;
+	_f3.push_back(f3);
+	_f3.push_back(new GravityGenerator(this, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, -10, 0)));
+
+	p3->addForceGenerator(_f3);
+}
+
+
 
 
 

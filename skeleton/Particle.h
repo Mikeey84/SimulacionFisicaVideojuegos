@@ -14,8 +14,14 @@ using namespace std;
 class ForceGenerator;
 
 class Particle {
+
 public:
+	enum Type
+	{
+		BOX
+	};
 	Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, float mass, Vector4 color = Vector4{1,1,1,1});
+	Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, float mass, Type type);
 
 	~Particle() {
 

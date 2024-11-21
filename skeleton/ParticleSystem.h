@@ -7,6 +7,8 @@
 #include "WindGenerator.h"
 #include "WhirlwindGenerator.h"
 #include "ExplosionGenerator.h"
+#include "SpringForceGenerator.h"
+#include "AnchoredSpringFG.h"
 using namespace std;
 
 class ParticleSystem
@@ -36,8 +38,7 @@ public:
 	void addForceGenerator(ForceType fT, Vector3 pos, Vector3 area, Vector3 gravity_speed, float k1, float k2, bool easy, double t, double tau);
 	void checkDeath(Particle* p);
 	
-
-
+	void generateSpringDemo();
 
 };
 
