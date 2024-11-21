@@ -31,7 +31,8 @@ Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxT
 
 void Particle::integrate(double t) { // t = tiempo de simulacion 
 	// Llamar al generador de fuerzas para que solo se actualice ese
-	_fG->update(t, this);
+	if(_fG != nullptr)
+		_fG->update(t, this);
 
 	// Movimiento de particula con velocidad
 	_time += t;

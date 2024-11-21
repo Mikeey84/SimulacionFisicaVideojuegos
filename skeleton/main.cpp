@@ -108,7 +108,7 @@ void initPhysics(bool interactive)
 	wind = new WindGenerator(sParticleSystem, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(30, 0, 0), 0.2,0,true);
 
 
-	whirlwind = new WhirlwindGenerator(sParticleSystem, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.06);
+	whirlwind = new WhirlwindGenerator(sParticleSystem, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.4);
 	
 
 	//sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, -10, 0), 0, 0, false, 0, 0);
@@ -121,7 +121,7 @@ void initPhysics(bool interactive)
 	
 
 	//sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.01, 100, 10000, -1, 1, 20, 25, -1, 1, 1);
-	sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.01, 100, 10000, -5, 5, 20, 25, -5, 5, 1, whirlwind);
+	sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.001, 100, 10000, -5, 5, 20, 25, -5, 5, 1, explosion);
 	//sParticleSystem->_generators[0]->changeColor(Vector4{ 1, 0, 1, 1 });
 
 	/*sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(-50,0,50), 0.1, 10, 100, 2, 2, 0, 2, 15, 2, 100);
@@ -201,7 +201,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		sProyectiles.push_back(new Proyectil(GetCamera()->getTransform(), GetCamera()->getDir(), 50, 10, 1));
 		break;
 	case 'E':
-		explosion = new ExplosionGenerator(sParticleSystem, Vector3(0, 20, 0), Vector3(0, 0, 0), 1000, 0, 0.1);
+		explosion = new ExplosionGenerator(sParticleSystem, Vector3(0, 20, 0), Vector3(0, 0, 0), 10000, 0.1, 0.1);
 		break;
 	case ' ':
 	{
