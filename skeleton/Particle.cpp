@@ -1,8 +1,8 @@
 #include "Particle.h"
 #include "ForceGenerator.h"
 
-Particle::Particle(ForceGenerator* fG, PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, float mass, Vector4 color) :
-	_pos(pos), _vel(vel), _acc(acc), _maxDis(maxDis), _maxTime(maxTime), _mass(mass), _fG(fG)
+Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, float mass, Vector4 color) :
+	_pos(pos), _vel(vel), _acc(acc), _maxDis(maxDis), _maxTime(maxTime), _mass(mass)
 	{
 		PxSphereGeometry geo(1);
 		PxShape* shape = CreateShape(geo);
@@ -13,26 +13,14 @@ Particle::Particle(ForceGenerator* fG, PxVec3 pos, PxVec3 vel, PxVec3 acc, float
 		RegisterRenderItem(_renderItem);
 		_damping = 0.99;
 	}
-
-Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, float mass, Vector4 color) :
-	_pos(pos), _vel(vel), _acc(acc), _maxDis(maxDis), _maxTime(maxTime), _mass(mass)
-{
-	PxSphereGeometry geo(1);
-	PxShape* shape = CreateShape(geo);
-	_color = color;
-	_area = { abs(pos.x) + _maxDis, abs(pos.y) + _maxDis , abs(pos.z) + _maxDis };
-	_pose = physx::PxTransform(_pos);
-	_renderItem = new RenderItem(shape, &_pose, _color);
-	RegisterRenderItem(_renderItem);
-	_damping = 0.99;
-}
 	
 
 
 void Particle::integrate(double t) { // t = tiempo de simulacion 
-	// Llamar al generador de fuerzas para que solo se actualice ese
-	if(_fG != nullptr)
-		_fG->update(t, this);
+	// Llamar a los generadores de fuerzas 
+	for (ForceGenerator* g : _forcesG) {
+		g->update(t, this);
+	}
 
 	// Movimiento de particula con velocidad
 	_time += t;
@@ -65,5 +53,11 @@ bool Particle::checkDis() {
 void Particle::addForce(Vector3 newForce) { // Metodo que añade lña nueva fuerza para que se aplique
 	_forces += newForce;
 }
+
+void Particle::addForceGenerator(vector<ForceGenerator*> _fGs) {
+	_forcesG = _fGs;
+}
+
+
 
 

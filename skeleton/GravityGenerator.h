@@ -11,6 +11,7 @@ public:
 	~GravityGenerator() {};
 	void update(double t, Particle* p) override;
 	
+
 	ParticleSystem* _pS = nullptr;
 };
 

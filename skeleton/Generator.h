@@ -18,7 +18,7 @@ public:
 		GAUSS
 	};
 	Generator(ParticleSystem* pS, Type type, PxVec3 pos, double time, double maxDis, double maxTime, float x1, float y1, float x2, float y2, float x3, 
-		float y3, float mass, ForceGenerator* fG);
+		float y3, float mass);
 	
 	void update(double t);
 
@@ -34,7 +34,7 @@ public:
 	void changeColor(Vector4 color) {
 		_c = color;
 	};
-	ForceGenerator* _fG = nullptr;
-	
+	vector<ForceGenerator*> _forces;
+	void addForceGenerator(ForceGenerator* fG);
 };
 

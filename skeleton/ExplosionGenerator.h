@@ -16,5 +16,6 @@ public:
 	float _k;
 	double _t;
 	double _tau;
+	void explosion() { _explosion = true; }
 };
 

@@ -15,9 +15,8 @@ class ForceGenerator;
 
 class Particle {
 public:
-	Particle(ForceGenerator* fG,PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, float mass, Vector4 color = Vector4{1,1,1,1});
+	Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, float mass, Vector4 color = Vector4{1,1,1,1});
 
-	Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, float mass, Vector4 color = Vector4{ 1,1,1,1 });
 	~Particle() {
 
 		DeregisterRenderItem(_renderItem); //deregistrar el item
@@ -31,6 +30,8 @@ public:
 	bool checkDeath();
 	bool checkDis();
 	void addForce(Vector3 newForce);
+	void addForceGenerator(vector<ForceGenerator*> _fGs);
+
 	PxVec3 _vel;
 	PxTransform _pose;
 	PxVec3 _pos;
@@ -44,5 +45,5 @@ public:
 
 	PxVec3 _forces = { 0,0,0 }; // Vector aditivo para sumar las fuerzas
 	float _mass;
-	ForceGenerator* _fG = nullptr;
+	vector<ForceGenerator*> _forcesG;
 };

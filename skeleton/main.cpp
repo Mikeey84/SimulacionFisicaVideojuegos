@@ -12,6 +12,7 @@
 #include "Proyectil.h"
 #include <iostream>
 #include "ParticleSystem.h"
+#include <vector>
 
 std::string display_text = "This is a test";
 
@@ -43,7 +44,7 @@ std::vector<Proyectil*> sProyectiles;
 ForceGenerator* gravity;
 ForceGenerator* wind;
 ForceGenerator* whirlwind;
-ForceGenerator* explosion;
+ExplosionGenerator* explosion;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -109,7 +110,7 @@ void initPhysics(bool interactive)
 
 
 	whirlwind = new WhirlwindGenerator(sParticleSystem, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.4);
-	
+	explosion = new ExplosionGenerator(sParticleSystem, Vector3(0, 10, 0), Vector3(0, 0, 0), 1000000, 0.1, 0.1);
 
 	//sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, -10, 0), 0, 0, false, 0, 0);
 	//sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, 50, 0), 0, 0, false, 0, 0);
@@ -121,7 +122,10 @@ void initPhysics(bool interactive)
 	
 
 	//sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.01, 100, 10000, -1, 1, 20, 25, -1, 1, 1);
-	sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.001, 100, 10000, -5, 5, 20, 25, -5, 5, 1, explosion);
+	sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.001, 100, 10000, -5, 5, 20, 25, -5, 5, 1);
+	sParticleSystem->_generators[0]->addForceGenerator(gravity);
+	//sParticleSystem->_generators[0]->addForceGenerator(wind);
+	sParticleSystem->_generators[0]->addForceGenerator(explosion);
 	//sParticleSystem->_generators[0]->changeColor(Vector4{ 1, 0, 1, 1 });
 
 	/*sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(-50,0,50), 0.1, 10, 100, 2, 2, 0, 2, 15, 2, 100);
@@ -201,7 +205,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		sProyectiles.push_back(new Proyectil(GetCamera()->getTransform(), GetCamera()->getDir(), 50, 10, 1));
 		break;
 	case 'E':
-		explosion = new ExplosionGenerator(sParticleSystem, Vector3(0, 20, 0), Vector3(0, 0, 0), 10000, 0.1, 0.1);
+		explosion->explosion();
+		explosion->_t = 0.1;
+		explosion->_tau = 0.1;
 		break;
 	case ' ':
 	{

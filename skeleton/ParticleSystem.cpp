@@ -26,15 +26,17 @@ void ParticleSystem::update(double t) {
 	
 }
 
-void ParticleSystem::addParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime, Vector4 color, float mass, ForceGenerator* fG) {
-	_particles.push_back(new Particle(fG, pos, vel, acc, maxDis, maxTime, mass, color));
+void ParticleSystem::addParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG) {
+	Particle* p = new Particle(pos, vel, acc, maxDis, maxTime, mass, color);
+	_particles.push_back(p);
+	p->addForceGenerator(fG);
 }
 
 
 
 void ParticleSystem::addGenerator(Generator::Type type, PxVec3 pos, double time, double maxDis, double maxTime,
-	float x1, float y1, float x2, float y2, float x3, float y3, float mass, ForceGenerator* fG) {
-	_generators.push_back(new Generator(this, type, pos, time, maxTime, maxDis, x1, y1, x2, y2, x3, y3, mass, fG));
+	float x1, float y1, float x2, float y2, float x3, float y3, float mass) {
+	_generators.push_back(new Generator(this, type, pos, time, maxTime, maxDis, x1, y1, x2, y2, x3, y3, mass));
 }
 
 void ParticleSystem::addForceGenerator(ForceType fT, Vector3 pos, Vector3 area, Vector3 gravity_speed, float k1, float k2, bool easy, double t, double tau) {

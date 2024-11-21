@@ -6,38 +6,7 @@ _k(k), _t(t), _tau(tau) {
 }
 
 void ExplosionGenerator::update(double t, Particle* p) {
-
-    //for (int i = 0; i < _pS->_particles.size(); ++i) {
-    //    const Vector3 pPos = _pS->_particles[i]->_pos;
-    //    if (checkCircleArea(_pS->_particles[i]->_pos)){
-
-    //        double dx = pPos.x - _pos.x;
-    //        double dy = pPos.y - _pos.y;
-    //        double dz = pPos.z - _pos.z;
-    //        float distance = (pPos - _pos).magnitude(); // Distancia de la particula con respecto al origen
-
-    //        double decay = std::exp(-_t / _tau);
-
-    //        // Calcula la magnitud del campo con la constante K y el decaimiento por r^2
-
-    //        double factor = _k / (_area.x * _area.x) * decay;
-
-    //        _force = {
-    //            /*(float)(dx * factor),
-    //            (float)(dy * factor),
-    //            (float)(dz * factor)*/
-    //             (float)(factor * dx * decay),
-    //            (float)(factor * dy * decay),
-    //             (float)(factor * dz * decay)
-    //        };
-    //       
-
-    //        _pS->_particles[i]->addForce(_force);
-    //    }
-    //}
-   
-    
-    //if (!_explosion) return;
+    if (!_explosion) return;
 
     double factor_tiempo = exp(-_t / _tau);
 
@@ -62,4 +31,5 @@ void ExplosionGenerator::update(double t, Particle* p) {
     
     
     _t += t;
+   
 }
