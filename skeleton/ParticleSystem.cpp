@@ -94,7 +94,7 @@ void ParticleSystem::generateSpringDemo() {
 }
 
 void ParticleSystem::generateBouyancyDemo() {
-	Particle* p1 = new Particle({ -10,5,0 }, { 0,0,0 }, { 0,0,0 }, 200, 10000, 0.85, { 1,1,1,1 });
+	Particle* p1 = new Particle({ -10,5,0 }, { 0,0,0 }, { 0,0,0 }, 200, 10000, 0.85, Particle::BOX);
 	_particles.push_back(p1);
 	BouyancyForceGenerator* f1 = new BouyancyForceGenerator(this, 8, 10, 2);
 	vector<ForceGenerator*> _f1;
