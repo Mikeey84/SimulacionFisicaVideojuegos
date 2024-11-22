@@ -142,7 +142,8 @@ void initPhysics(bool interactive)
 	
 	//------------------------------MUELLES----------------------------------------
 
-	sParticleSystem->generateSpringDemo();
+	//sParticleSystem->generateSpringDemo();
+	sParticleSystem->generateBouyancyDemo();
 
 
 

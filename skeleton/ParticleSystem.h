@@ -9,6 +9,9 @@
 #include "ExplosionGenerator.h"
 #include "SpringForceGenerator.h"
 #include "AnchoredSpringFG.h"
+#include "BouyancyForceGenerator.h"
+
+
 using namespace std;
 
 class ParticleSystem
@@ -39,6 +42,7 @@ public:
 	void checkDeath(Particle* p);
 	
 	void generateSpringDemo();
+	void generateBouyancyDemo();
 
 };
 

@@ -68,8 +68,8 @@ void ParticleSystem::generateSpringDemo() {
 	Particle* p2 = new Particle({ 10,10,0 }, { 0,0,0 }, { 0,0,0 }, 200, 10000, 0.85, { 1,1,1,1 });
 	
 	p2->_mass = 2;
-	SpringForceGenerator* f1 = new SpringForceGenerator(this,1.5, 25, p2);
-	SpringForceGenerator* f2 = new SpringForceGenerator(this, 1.5, 25, p1);
+	SpringForceGenerator* f1 = new SpringForceGenerator(this,1.5, 11, p2);
+	SpringForceGenerator* f2 = new SpringForceGenerator(this, 1.5, 11, p1);
 
 	_particles.push_back(p1);
 	_particles.push_back(p2);
@@ -91,6 +91,16 @@ void ParticleSystem::generateSpringDemo() {
 	_f3.push_back(new GravityGenerator(this, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, -10, 0)));
 
 	p3->addForceGenerator(_f3);
+}
+
+void ParticleSystem::generateBouyancyDemo() {
+	Particle* p1 = new Particle({ -10,5,0 }, { 0,0,0 }, { 0,0,0 }, 200, 10000, 0.85, { 1,1,1,1 });
+	_particles.push_back(p1);
+	BouyancyForceGenerator* f1 = new BouyancyForceGenerator(this, 8, 10, 2);
+	vector<ForceGenerator*> _f1;
+	_f1.push_back(f1);
+	_f1.push_back(new GravityGenerator(this, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, -9.8, 0)));
+	p1->addForceGenerator(_f1);
 }
 
 

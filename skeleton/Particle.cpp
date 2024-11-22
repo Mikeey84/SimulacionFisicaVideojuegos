@@ -16,16 +16,24 @@ Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxT
 
 Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, float mass, Type type) : 
 	_pos(pos), _vel(vel), _acc(acc), _maxDis(maxDis), _maxTime(maxTime), _mass(mass) {
+	PxBoxGeometry* geo;
+	PxShape* shape;
 	if (type == Type::BOX) {
-		PxBoxGeometry geo(1,1,1); 
-		PxShape* shape = CreateShape(geo);
+		geo = new PxBoxGeometry(1, 1, 1);
+		shape = CreateShape(*geo);
 		_color = { 1,1,1,1 };
-		_area = { abs(pos.x) + _maxDis, abs(pos.y) + _maxDis , abs(pos.z) + _maxDis };
-		_pose = physx::PxTransform(_pos);
-		_renderItem = new RenderItem(shape, &_pose, _color);
-		RegisterRenderItem(_renderItem);
-		_damping = 0.99;
 	}
+	else if (type == Type::PLANE) {
+		geo = new PxBoxGeometry(4, 0.5, 4);
+		shape = CreateShape(*geo);
+		_color = { 0,0,1,1 };
+	}
+	
+	_area = { abs(pos.x) + _maxDis, abs(pos.y) + _maxDis , abs(pos.z) + _maxDis };
+	_pose = physx::PxTransform(_pos);
+	_renderItem = new RenderItem(shape, &_pose, _color);
+	RegisterRenderItem(_renderItem);
+	_damping = 0.99;
 }
 	
 
