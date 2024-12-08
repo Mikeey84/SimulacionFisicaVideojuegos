@@ -8,8 +8,8 @@ class SpringForceGenerator : public ForceGenerator
 public:
 	SpringForceGenerator(ParticleSystem* pS, double k, double restingLength, Particle* other);
 
-	virtual void update(double t,Particle* p);
-
+	virtual void update(double t,Particle* p) override;
+	Vector3 getForce(Vector3 pos) override;
 	inline void setk(double k) { _k = k; }
 	
 	virtual ~SpringForceGenerator(){};

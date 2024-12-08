@@ -3,6 +3,7 @@
 
 ExplosionGenerator::ExplosionGenerator(ParticleSystem* pS, Vector3 pos, Vector3 area, float k, double t, double tau) : ForceGenerator(pS, pos, area), _pS(pS),
 _k(k), _t(t), _tau(tau) {
+    _type = ForceGenerator::EXPLOSION;
 }
 
 void ExplosionGenerator::update(double t, Particle* p) {
@@ -32,4 +33,9 @@ void ExplosionGenerator::update(double t, Particle* p) {
     
     _t += t;
    
+}
+
+Vector3 ExplosionGenerator::getForce(Vector3 pos)
+{
+    return Vector3();
 }

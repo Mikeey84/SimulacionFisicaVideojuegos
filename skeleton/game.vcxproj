@@ -267,6 +267,7 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="SolidoRigido.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="WhirlwindGenerator.cpp" />
@@ -287,6 +288,7 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="SolidoRigido.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="WhirlwindGenerator.h" />
     <ClInclude Include="WindGenerator.h" />

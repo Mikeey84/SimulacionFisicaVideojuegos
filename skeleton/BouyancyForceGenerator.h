@@ -8,7 +8,7 @@ public:
 	BouyancyForceGenerator(ParticleSystem* pS, float h, float V, float d);
 
 	virtual void update(double t, Particle* p);
-
+	Vector3 getForce(Vector3 pos) override;
 	virtual ~BouyancyForceGenerator() {};
 
 protected:

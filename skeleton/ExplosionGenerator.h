@@ -9,7 +9,7 @@ public:
 	ExplosionGenerator(ParticleSystem* pS, Vector3 pos, Vector3 area, float k, double t, double tau);
 
 	void update(double t, Particle* p) override;
-
+	Vector3 getForce(Vector3 pos) override;
 	ParticleSystem* _pS;
 
 	bool _explosion = false;

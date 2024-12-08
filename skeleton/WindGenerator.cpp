@@ -3,6 +3,7 @@
 
 WindGenerator::WindGenerator(ParticleSystem* pS, Vector3 pos, Vector3 area, Vector3 windSpeed, float k1, float k2, bool easy) : 
 	ForceGenerator(pS, pos, area), _windSpeed(windSpeed), _pS(pS), _k1(k1), _k2(k2), _easy(easy) {
+	_type = ForceGenerator::WIND;
 }
 
 void WindGenerator::update(double t, Particle* p) {
@@ -10,8 +11,7 @@ void WindGenerator::update(double t, Particle* p) {
 	// Si la particula esta dentro del area aplicamos la formula con k2 = 0 de momenento
 	
 	if (_easy) {
-		Vector3 pVel = p->_vel;
-		_force = _k1 * (_windSpeed - pVel) + _k2 * (_windSpeed - pVel).magnitude() * (_windSpeed - pVel);
+		_force = getForce(p->_vel);
 		p->addForce(_force);
 	}
 	else { //Opcional
@@ -23,6 +23,11 @@ void WindGenerator::update(double t, Particle* p) {
 			
 	
 
+}
+
+Vector3 WindGenerator::getForce(Vector3 pVel)
+{
+	return _force = _k1 * (_windSpeed - pVel) + _k2 * (_windSpeed - pVel).magnitude() * (_windSpeed - pVel);
 }
 
 float WindGenerator::areaOfObject(float radius)

@@ -12,6 +12,7 @@
 #include "Proyectil.h"
 #include <iostream>
 #include "ParticleSystem.h"
+#include "SolidoRigido.h"
 #include <vector>
 
 std::string display_text = "This is a test";
@@ -45,6 +46,7 @@ ForceGenerator* gravity;
 ForceGenerator* wind;
 ForceGenerator* whirlwind;
 ExplosionGenerator* explosion;
+
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -102,7 +104,7 @@ void initPhysics(bool interactive)
 
 
 
-	sParticleSystem = new ParticleSystem();
+	sParticleSystem = new ParticleSystem(gPhysics, gScene);
 	//---------------------FORCEGENERATORS-----------------------------//
 	
 	gravity = new GravityGenerator(sParticleSystem, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, -10, 0));
@@ -124,8 +126,8 @@ void initPhysics(bool interactive)
 
 
 	//-----------------------------PRACTICAFUERZAS--------------------------------------------------------------
-	/*sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.001, 100, 10000, -5, 5, 20, 25, -5, 5, 1);
-	sParticleSystem->_generators[0]->addForceGenerator(gravity);
+	//sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.001, 100, 10000, -5, 5, 20, 25, -5, 5, 1,0);
+	/*sParticleSystem->_generators[0]->addForceGenerator(gravity);
 	sParticleSystem->_generators[0]->addForceGenerator(explosion);*/
 
 	//sParticleSystem->_generators[0]->addForceGenerator(wind);
@@ -143,10 +145,24 @@ void initPhysics(bool interactive)
 	//------------------------------MUELLES----------------------------------------
 
 	//sParticleSystem->generateSpringDemo();
-	sParticleSystem->generateBouyancyDemo();
+	//sParticleSystem->generateBouyancyDemo();
 
 
 
+	//---------------------------SOLIDORIGIDO-------------------------------------
+	PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({0,0,0}));
+	PxShape* shape = CreateShape(PxBoxGeometry(100, 0.1, 100));
+	suelo->attachShape(*shape);
+	gScene->addActor(*suelo);
+	RenderItem* _dynamicItem;
+	_dynamicItem = new RenderItem(shape, suelo, { 1,1,1,1 });
+	RegisterRenderItem(_dynamicItem);
+
+	
+	sParticleSystem->addGenerator(Generator::UNIFORM_RB, PxVec3(0, 0, 0), 1, 100, 10000, -5, 5, 30, 35, -5, 5, 1, 5);
+	sParticleSystem->_generators[0]->_c = { 1,0,1,1 };
+	sParticleSystem->_generators[0]->addForceGenerator(gravity);
+	sParticleSystem->_generators[0]->addForceGenerator(wind);
 	//Registers
 	/*RegisterRenderItem(sSphere);
 	RegisterRenderItem(sSphereRed);

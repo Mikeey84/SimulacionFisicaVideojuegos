@@ -8,7 +8,13 @@ BouyancyForceGenerator::BouyancyForceGenerator(ParticleSystem* pS, float h, floa
 }
 
 void BouyancyForceGenerator::update(double t, Particle* p) {
-	float h = p->_pos.y;
+	
+	_force = getForce(p->_pos);
+	p->addForce(_force);
+}
+
+Vector3 BouyancyForceGenerator::getForce(Vector3 pos) {
+	float h = pos.y;
 	float h0 = _liquidParticle->_pos.y;
 
 	Vector3 f(0, 0, 0);
@@ -25,5 +31,5 @@ void BouyancyForceGenerator::update(double t, Particle* p) {
 	}
 	f.y = _liquidDensity * _volume * inmersed;
 
-	p->addForce(f);
+	return f;
 }

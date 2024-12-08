@@ -1,7 +1,8 @@
 #include "ParticleSystem.h"
 
 
-ParticleSystem::ParticleSystem() {
+
+ParticleSystem::ParticleSystem(PxPhysics* gPhysics, PxScene* gScene) : _gPhysics(gPhysics), _gScene(gScene) { 
 
 }
 
@@ -15,7 +16,9 @@ void ParticleSystem::update(double t) {
 		p->integrate(t);
 		checkDeath(p);
 	}
-
+	for (SolidoRigido* s : _solidosRigidos) {
+		s->update();
+	}
 	for (Particle* p : _particlesToErase) {
 		auto it = find(_particles.begin(), _particles.end(), p);
 		_particles.erase(it);
@@ -31,11 +34,17 @@ void ParticleSystem::addParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double max
 	p->addForceGenerator(fG);
 }
 
+void ParticleSystem::addRBParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG) {
+	SolidoRigido* p = new SolidoRigido(_gPhysics, _gScene, &PxTransform(pos), vel, acc, maxDis, maxTime, mass, color);
+	_solidosRigidos.push_back(p);
+	p->addForceGenerator(fG);
+}
+
 
 
 void ParticleSystem::addGenerator(Generator::Type type, PxVec3 pos, double time, double maxDis, double maxTime,
-	float x1, float y1, float x2, float y2, float x3, float y3, float mass) {
-	_generators.push_back(new Generator(this, type, pos, time, maxTime, maxDis, x1, y1, x2, y2, x3, y3, mass));
+	float x1, float y1, float x2, float y2, float x3, float y3, float mass, int maxCount) {
+	_generators.push_back(new Generator(this, type, pos, time, maxTime, maxDis, x1, y1, x2, y2, x3, y3, mass, maxCount));
 }
 
 void ParticleSystem::addForceGenerator(ForceType fT, Vector3 pos, Vector3 area, Vector3 gravity_speed, float k1, float k2, bool easy, double t, double tau) {
