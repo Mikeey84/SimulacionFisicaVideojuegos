@@ -258,6 +258,7 @@
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="ExplosionGenerator.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
+    <ClCompile Include="GeneraEscenaFinal.cpp" />
     <ClCompile Include="Generator.cpp" />
     <ClCompile Include="GravityGenerator.cpp" />
     <ClCompile Include="main.cpp" />
@@ -280,6 +281,7 @@
     <ClInclude Include="core.hpp" />
     <ClInclude Include="ExplosionGenerator.h" />
     <ClInclude Include="ForceGenerator.h" />
+    <ClInclude Include="GeneraEscenaFinal.h" />
     <ClInclude Include="Generator.h" />
     <ClInclude Include="GravityGenerator.h" />
     <ClInclude Include="Particle.h" />

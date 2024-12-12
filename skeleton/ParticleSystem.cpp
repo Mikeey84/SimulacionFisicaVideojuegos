@@ -47,6 +47,12 @@ void ParticleSystem::addRBParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double m
 	p->addForceGenerator(fG);
 }
 
+void ParticleSystem::addRBParticlesC(PxVec3 pos, PxVec3 vel, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG) {
+	SolidoRigido* p = new SolidoRigido(_gPhysics, _gScene, &PxTransform(pos), vel, maxDis, maxTime, mass, color);
+	_solidosRigidos.push_back(p);
+	p->addForceGenerator(fG);
+}
+
 
 
 void ParticleSystem::addGenerator(Generator::Type type, PxVec3 pos, double time, double maxDis, double maxTime,
