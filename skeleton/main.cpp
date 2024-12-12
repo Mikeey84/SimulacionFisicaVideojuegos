@@ -47,6 +47,8 @@ ForceGenerator* wind;
 ForceGenerator* whirlwind;
 ExplosionGenerator* explosion;
 
+Pistol* sPistol;
+Rafaga* sRafaga;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -150,7 +152,7 @@ void initPhysics(bool interactive)
 
 
 	//---------------------------SOLIDORIGIDO-------------------------------------
-	PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({0,0,0}));
+	/*PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({0,0,0}));
 	PxShape* shape = CreateShape(PxBoxGeometry(100, 0.1, 100));
 	suelo->attachShape(*shape);
 	gScene->addActor(*suelo);
@@ -162,7 +164,30 @@ void initPhysics(bool interactive)
 	sParticleSystem->addGenerator(Generator::UNIFORM_RB, PxVec3(0, 0, 0), 1, 100, 10000, -5, 5, 30, 35, -5, 5, 1, 5);
 	sParticleSystem->_generators[0]->_c = { 1,0,1,1 };
 	sParticleSystem->_generators[0]->addForceGenerator(gravity);
-	sParticleSystem->_generators[0]->addForceGenerator(wind);
+	sParticleSystem->_generators[0]->addForceGenerator(wind);*/
+
+
+
+	//--------------------------PRACTICAFINAL------------------------------------
+	
+	// Suelo
+	PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
+	PxShape* shape = CreateShape(PxBoxGeometry(100, 0.1, 100));
+	suelo->attachShape(*shape);
+	gScene->addActor(*suelo);
+	RenderItem* _dynamicItem;
+	_dynamicItem = new RenderItem(shape, suelo, { 1,1,1,1 });
+	RegisterRenderItem(_dynamicItem);
+
+
+
+	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 200, 10, 0.5);
+	sParticleSystem->addGun(sPistol);
+	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.2, 1.2, 3, 200, 10);
+	sParticleSystem->addGun(sRafaga);
+
+
+
 	//Registers
 	/*RegisterRenderItem(sSphere);
 	RegisterRenderItem(sSphereRed);
@@ -225,12 +250,15 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case 'B': break;
 	//case ' ':	break;
 	case 'P':
-		sProyectiles.push_back(new Proyectil(GetCamera()->getTransform(), GetCamera()->getDir(), 50, 10, 1));
+		sPistol->shoot();
 		break;
 	case 'E':
 		explosion->explosion();
 		explosion->_t = 0.1;
 		explosion->_tau = 0.1;
+		break;
+	case 'R':
+		sRafaga->shoot();
 		break;
 	case ' ':
 	{

@@ -3,7 +3,10 @@
 
 
 ParticleSystem::ParticleSystem(PxPhysics* gPhysics, PxScene* gScene) : _gPhysics(gPhysics), _gScene(gScene) { 
-
+	_forcesModelGravity.push_back(new GravityGenerator(this, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, -10, 0)));
+	_forcesModelGravityWind.push_back(new GravityGenerator(this, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, -10, 0)));
+	_forcesModelGravityWind.push_back(new WindGenerator(this, Vector3(0, 0, 0), Vector3(0, 0, 0), 
+		Vector3(30, 0, 0), 0.2, 0, true));
 }
 
 void ParticleSystem::update(double t) {
@@ -24,6 +27,10 @@ void ParticleSystem::update(double t) {
 		_particles.erase(it);
 		delete p;  
 	}
+	for (Gun* g : _guns) {
+		g->update(t);
+	}
+
 	_particlesToErase.clear();
 	
 }
