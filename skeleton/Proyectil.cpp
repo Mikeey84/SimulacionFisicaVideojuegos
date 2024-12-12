@@ -19,3 +19,22 @@ Proyectil::Proyectil(PxTransform camera, PxVec3 dir, float  vel, float m, float 
 void Proyectil::Escalado(float escalar) {
 	_vS = _vR * _v / escalar;
 }
+
+Pistol::Pistol(Camera* cam, PxPhysics* gPhysics, PxScene* gScene, float vel, float mass) 
+	: Gun(cam, gPhysics, gScene, vel, mass) {
+	
+}
+
+Rafaga::Rafaga(Camera* cam, PxPhysics* gPhysics, PxScene* gScene, float timeBetShoot, int n, float vel, float mass) 
+	: Gun(cam, gPhysics, gScene, vel, mass), _timeBetShoot(timeBetShoot), _n(n) {
+
+}
+
+void Rafaga::update(double t) {
+	_lastTimeAdd += t;
+	if (_lastTimeAdd > _timeBetShoot) {
+		// Añadir Rb
+
+		_lastTimeAdd = 0;
+	}
+}
