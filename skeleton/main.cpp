@@ -175,7 +175,7 @@ void initPhysics(bool interactive)
 	// Armas
 	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 50, 10, 0.5);
 	sParticleSystem->addGun(sPistol);
-	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.2, 0.7, 3, 50, 10);
+	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 50, 10);
 	sParticleSystem->addGun(sRafaga);
 
 	// Escena con las armas
