@@ -35,6 +35,7 @@ public:
 	vector<Particle*> _particles;
 	vector<SolidoRigido*> _solidosRigidos;
 	vector<Particle*> _particlesToErase;
+	vector<SolidoRigido*> _solidosToErase;
 	vector<Generator*> _generators;
 	vector<Gun*> _guns;
 	vector<ForceGenerator*> _forceGenerators;

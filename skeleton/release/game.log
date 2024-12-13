@@ -1,0 +1,46 @@
+﻿  ParticleSystem.cpp
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: "physx::PxLightCpuTask::mRefCount": un miembro de datos no estático con un tipo calificado volátil ya no implica
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220:          que los constructores de copia/movimiento generados por el compilador y los operadores de asignación de copia o movimiento no sean triviales
+  (compilando archivo de origen "ParticleSystem.cpp")
+  C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\common\PhysX-3.4\PxShared\include\task\PxTask.h(326,19):
+  vea la declaración de 'physx::PxLightCpuTask::mRefCount'
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\Render\Camera.h(50,21): warning C4596: 'setEye': nombre completo no válido en la declaración de miembro
+  (compilando archivo de origen "ParticleSystem.cpp")
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\Render\Camera.h(54,21): warning C4596: 'setDir': nombre completo no válido en la declaración de miembro
+  (compilando archivo de origen "ParticleSystem.cpp")
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\ForceGenerator.h(33,1): warning C5204: "ForceGenerator": la clase tiene funciones virtuales, pero su destructor trivial no es virtual; puede que las instancias de objetos derivados de esta clase no se destruyan correctamente
+  (compilando archivo de origen "ParticleSystem.cpp")
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\GravityGenerator.h(11,3): warning C4265: "GravityGenerator": la clase tiene funciones virtuales, pero su destructor no trivial no es virtual; puede que las instancias de esta clase no se destruyan correctamente
+  (compilando archivo de origen "ParticleSystem.cpp")
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\WindGenerator.h(17,1): warning C5204: "WindGenerator": la clase tiene funciones virtuales, pero su destructor trivial no es virtual; puede que las instancias de objetos derivados de esta clase no se destruyan correctamente
+  (compilando archivo de origen "ParticleSystem.cpp")
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\WhirlwindGenerator.h(15,1): warning C5204: "WhirlwindGenerator": la clase tiene funciones virtuales, pero su destructor trivial no es virtual; puede que las instancias de objetos derivados de esta clase no se destruyan correctamente
+  (compilando archivo de origen "ParticleSystem.cpp")
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\ExplosionGenerator.h(20,1): warning C5204: "ExplosionGenerator": la clase tiene funciones virtuales, pero su destructor trivial no es virtual; puede que las instancias de objetos derivados de esta clase no se destruyan correctamente
+  (compilando archivo de origen "ParticleSystem.cpp")
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\BouyancyForceGenerator.h(21,1): warning C4626: 'BouyancyForceGenerator': el operador de asignaciones se definió implícitamente como eliminado
+  (compilando archivo de origen "ParticleSystem.cpp")
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\Proyectil.h(49,1): warning C5204: "Gun": la clase tiene funciones virtuales, pero su destructor trivial no es virtual; puede que las instancias de objetos derivados de esta clase no se destruyan correctamente
+  (compilando archivo de origen "ParticleSystem.cpp")
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\Proyectil.h(35,35): warning C5038: miembro de datos "Gun::_gScene" se inicializará después de miembro de datos "Gun::_vel"
+  (compilando archivo de origen "ParticleSystem.cpp")
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\Proyectil.h(54,3): warning C4265: "Pistol": la clase tiene funciones virtuales, pero su destructor no trivial no es virtual; puede que las instancias de esta clase no se destruyan correctamente
+  (compilando archivo de origen "ParticleSystem.cpp")
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\Proyectil.h(62,3): warning C4265: "Rafaga": la clase tiene funciones virtuales, pero su destructor no trivial no es virtual; puede que las instancias de esta clase no se destruyan correctamente
+  (compilando archivo de origen "ParticleSystem.cpp")
+  
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\ParticleSystem.cpp(51,75): warning C4238: se ha utilizado una extensión no estándar: valor-R de clase utilizado como valor L
+C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\skeleton\ParticleSystem.cpp(57,75): warning C4238: se ha utilizado una extensión no estándar: valor-R de clase utilizado como valor L
+  game.vcxproj -> C:\Users\mineg\OneDrive\Documentos\GitHub\SimulacionFisicaVideojuegos\bin\game.exe

@@ -117,7 +117,7 @@ void initPhysics(bool interactive)
 
 
 	whirlwind = new WhirlwindGenerator(sParticleSystem, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.4);
-	explosion = new ExplosionGenerator(sParticleSystem, Vector3(0, 10, 0), Vector3(0, 0, 0), 1000000, 0.1, 0.1);
+	explosion = new ExplosionGenerator(sParticleSystem, Vector3(0, 20, 0), Vector3(0, 0, 0), 100000000, 0.1, 0.1);
 
 	//sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, -10, 0), 0, 0, false, 0, 0);
 	//sParticleSystem->addForceGenerator(ParticleSystem::ForceType::GRAVITY, Vector3(0, 0, 0), Vector3(10000, 10000, 10000), Vector3(0, 50, 0), 0, 0, false, 0, 0);
@@ -131,14 +131,18 @@ void initPhysics(bool interactive)
 
 
 	//-----------------------------PRACTICAFUERZAS--------------------------------------------------------------
-	//sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.001, 100, 10000, -5, 5, 20, 25, -5, 5, 1,0);
-	/*sParticleSystem->_generators[0]->addForceGenerator(gravity);
+	/*sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0,0,0), 0.001, 100, 10000, -5, 5, 20, 25, -5, 5, 1,0);
+	sParticleSystem->_generators[0]->addForceGenerator(gravity);
 	sParticleSystem->_generators[0]->addForceGenerator(explosion);*/
 
 	//sParticleSystem->_generators[0]->addForceGenerator(wind);
+	//sParticleSystem->_generators[0]->addForceGenerator(whirlwind);
+	
+	// 
 	//sParticleSystem->_generators[0]->changeColor(Vector4{ 1, 0, 1, 1 });
 
-	/*sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(-50,0,50), 0.1, 10, 100, 2, 2, 0, 2, 15, 2, 100);
+	/*sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(0,40,0), 0.1, 10, 100, 2, 2, 0, 2, 15, 2, 100, 0);*/
+	/*sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0, 35, 0), 0.001, 100, 10000, -5, 5, 20, 25, -5, 5, 1, 0);
 	sParticleSystem->_generators[1]->changeColor(Vector4{ 1, 0, 1, 1 });*/
 	
 	/*sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(50,0,-100), 0.1, 1000, 10000, 0,10, 0,0, 0 ,10, 10);
@@ -172,7 +176,7 @@ void initPhysics(bool interactive)
 
 
 	//--------------------------PRACTICAFINAL------------------------------------
-	// Armas
+	//Armas
 	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 50, 10, 0.5);
 	sParticleSystem->addGun(sPistol);
 	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 50, 10);
@@ -264,10 +268,17 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 }
 
-void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
+void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 {
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
+
+	for(SolidoRigido* s : sParticleSystem->_solidosRigidos){
+		if (actor1 == s->_newSolid || actor2 == s->_newSolid) {
+			s->_maxTime = 0;
+			std::cout << "Se elimina" << std::endl;
+		}
+	}
 }
 
 

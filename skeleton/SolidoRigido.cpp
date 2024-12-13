@@ -1,8 +1,9 @@
 #include "SolidoRigido.h"
+#include "ParticleSystem.h"
 
-SolidoRigido::SolidoRigido(PxPhysics* gPhysics, PxScene* gScene, PxTransform* gTransform, Vector3 linearVel, Vector3 angularVel,
+SolidoRigido::SolidoRigido(ParticleSystem* pS, PxPhysics* gPhysics, PxScene* gScene, PxTransform* gTransform, Vector3 linearVel, Vector3 angularVel,
 	double maxDis, double maxTime, float mass, Vector4 color) :
-	_pos(gTransform), _linearVel(linearVel), _angularVel(angularVel), _maxDis(maxDis), _maxTime(maxTime), _mass(mass) 
+	_pos(gTransform), _linearVel(linearVel), _angularVel(angularVel), _maxDis(maxDis), _maxTime(maxTime), _mass(mass), _pS(pS)
 {
 	_newSolid = gPhysics->createRigidDynamic(*_pos);
 	_newSolid->setLinearVelocity(linearVel);
@@ -12,14 +13,14 @@ SolidoRigido::SolidoRigido(PxPhysics* gPhysics, PxScene* gScene, PxTransform* gT
 	PxRigidBodyExt::updateMassAndInertia(*_newSolid, 0.15);
 	gScene->addActor(*_newSolid);
 	_newSolid->setMass(_mass);
-	RenderItem* _dynamicItem;
+	
 	_dynamicItem = new RenderItem(shape_ad, _newSolid, color);
 	RegisterRenderItem(_dynamicItem);
 }
 
-SolidoRigido::SolidoRigido(PxPhysics* gPhysics, PxScene* gScene, PxTransform* gTransform, Vector3 linearVel, 
+SolidoRigido::SolidoRigido(ParticleSystem* pS, PxPhysics* gPhysics, PxScene* gScene, PxTransform* gTransform, Vector3 linearVel,
 	double maxDis, double maxTime, float mass, Vector4 color) :
-	_pos(gTransform), _linearVel(linearVel), _angularVel({0,0,0}), _maxDis(maxDis), _maxTime(maxTime), _mass(mass) {
+	_pos(gTransform), _linearVel(linearVel), _angularVel({0,0,0}), _maxDis(maxDis), _maxTime(maxTime), _mass(mass), _pS(pS) {
 	_newSolid = gPhysics->createRigidDynamic(*_pos);
 	_newSolid->setLinearVelocity(linearVel);
 	_newSolid->setAngularVelocity({0,0,0});
@@ -28,7 +29,6 @@ SolidoRigido::SolidoRigido(PxPhysics* gPhysics, PxScene* gScene, PxTransform* gT
 	PxRigidBodyExt::updateMassAndInertia(*_newSolid, 0.15);
 	gScene->addActor(*_newSolid);
 	_newSolid->setMass(_mass);
-	RenderItem* _dynamicItem;
 	_dynamicItem = new RenderItem(shape_ad, _newSolid, color);
 	RegisterRenderItem(_dynamicItem);
 }
@@ -41,12 +41,19 @@ void SolidoRigido::addForceGenerator(vector<ForceGenerator*> _fGs) {
 }
 
 void SolidoRigido::update() {
-	for (ForceGenerator* f : _forcesG) {
-		if (f->_type == ForceGenerator::WIND) {
-			_newSolid->addForce(f->getForce(_linearVel), PxForceMode::eFORCE);
-		}
-		else
-			_newSolid->addForce(f->getForce(_pos->p), PxForceMode::eFORCE);
+	if (_maxTime == 0 && _isAlive) {
+		_pS->_solidosToErase.push_back(this);
+		_isAlive = false;
 	}
+	else {
+		for (ForceGenerator* f : _forcesG) {
+			if (f->_type == ForceGenerator::WIND) {
+				_newSolid->addForce(f->getForce(_linearVel), PxForceMode::eFORCE);
+			}
+			else
+				_newSolid->addForce(f->getForce(_pos->p), PxForceMode::eFORCE);
+		}
+	}
+	
 }
 

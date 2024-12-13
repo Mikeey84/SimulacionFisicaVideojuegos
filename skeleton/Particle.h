@@ -27,7 +27,7 @@ public:
 	~Particle() {
 
 		DeregisterRenderItem(_renderItem); //deregistrar el item
-		delete _renderItem;
+		//delete _renderItem;
 		
 		_renderItem = nullptr;
 		

@@ -27,11 +27,17 @@ void ParticleSystem::update(double t) {
 		_particles.erase(it);
 		delete p;  
 	}
+	for (SolidoRigido* p : _solidosToErase) {
+		auto it = find(_solidosRigidos.begin(), _solidosRigidos.end(), p);
+		_solidosRigidos.erase(it);
+		delete p;
+	}
 	for (Gun* g : _guns) {
 		g->update(t);
 	}
 
 	_particlesToErase.clear();
+	_solidosToErase.clear();
 	
 }
 
@@ -42,13 +48,13 @@ void ParticleSystem::addParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double max
 }
 
 void ParticleSystem::addRBParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG) {
-	SolidoRigido* p = new SolidoRigido(_gPhysics, _gScene, &PxTransform(pos), vel, acc, maxDis, maxTime, mass, color);
+	SolidoRigido* p = new SolidoRigido(this, _gPhysics, _gScene, &PxTransform(pos), vel, acc, maxDis, maxTime, mass, color);
 	_solidosRigidos.push_back(p);
 	p->addForceGenerator(fG);
 }
 
 void ParticleSystem::addRBParticlesC(PxVec3 pos, PxVec3 vel, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG) {
-	SolidoRigido* p = new SolidoRigido(_gPhysics, _gScene, &PxTransform(pos), vel, maxDis, maxTime, mass, color);
+	SolidoRigido* p = new SolidoRigido(this, _gPhysics, _gScene, &PxTransform(pos), vel, maxDis, maxTime, mass, color);
 	_solidosRigidos.push_back(p);
 	p->addForceGenerator(fG);
 }
