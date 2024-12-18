@@ -46,6 +46,7 @@ GeneraEscenaFinal::GeneraEscenaFinal(Camera* cam, ParticleSystem* pS, PxPhysics*
     // Rampas 
     CreateRamp({ -20, 5, 10 }, { 20, 5, 10 }, { 0.8, 0.8, 0.8, 1 }); 
     CreateRamp({ 20, 5, 10 }, { 20, 5, 10 }, { 0.8, 0.8, 0.8, 1 });
+    _pS->addRandomEnemy();
 }
 
 void GeneraEscenaFinal::CreateBox(PxVec3 position, PxVec3 dimensions, PxVec4 color) {

@@ -8,7 +8,7 @@ SolidoRigido::SolidoRigido(ParticleSystem* pS, PxPhysics* gPhysics, PxScene* gSc
 	_newSolid = gPhysics->createRigidDynamic(*_pos);
 	_newSolid->setLinearVelocity(linearVel);
 	_newSolid->setAngularVelocity(angularVel);
-	PxShape* shape_ad = CreateShape(PxBoxGeometry(5, 5, 5));
+	PxShape* shape_ad = CreateShape(PxBoxGeometry(2, 2, 2));
 	_newSolid->attachShape(*shape_ad);
 	PxRigidBodyExt::updateMassAndInertia(*_newSolid, 0.15);
 	gScene->addActor(*_newSolid);
@@ -16,11 +16,12 @@ SolidoRigido::SolidoRigido(ParticleSystem* pS, PxPhysics* gPhysics, PxScene* gSc
 	_dynamicItem = new RenderItem(shape_ad, _newSolid, color);
 	RegisterRenderItem(_dynamicItem);
 	_bola = false;
+	_initialPos = _pos->p;
 }
 
 SolidoRigido::SolidoRigido(ParticleSystem* pS, PxPhysics* gPhysics, PxScene* gScene, PxTransform* gTransform, Vector3 linearVel,
-	double maxDis, double maxTime, float mass, Vector4 color) :
-	_pos(gTransform), _linearVel(linearVel), _angularVel({0,0,0}), _maxDis(maxDis), _maxTime(maxTime), _mass(mass), _pS(pS) {
+	double maxDis, double maxTime, float mass, int points, Vector4 color) :
+	_pos(gTransform), _linearVel(linearVel), _angularVel({0,0,0}), _maxDis(maxDis), _maxTime(maxTime), _mass(mass), _pS(pS), _points(points) {
 	_newSolid = gPhysics->createRigidDynamic(*_pos);
 	_newSolid->setLinearVelocity(linearVel);
 	_newSolid->setAngularVelocity({0,0,0});
@@ -32,6 +33,7 @@ SolidoRigido::SolidoRigido(ParticleSystem* pS, PxPhysics* gPhysics, PxScene* gSc
 	_dynamicItem = new RenderItem(shape_ad, _newSolid, color);
 	RegisterRenderItem(_dynamicItem);
 	_bola = true;
+	_initialPos = _pos->p;
 }
 
 void SolidoRigido::addForceGenerator(vector<ForceGenerator*> _fGs) {
@@ -41,7 +43,9 @@ void SolidoRigido::addForceGenerator(vector<ForceGenerator*> _fGs) {
 	}*/
 }
 
-void SolidoRigido::update() {
+void SolidoRigido::update(double t) {
+	_livingTime += t;
+	if (_livingTime > _maxTime) _maxTime = 0;
 	if (_maxTime == 0 && _isAlive) {
 		if (_bola) {
 			_pS->_solidosToErase.push_back(this);
@@ -56,7 +60,7 @@ void SolidoRigido::update() {
 	else {
 		for (ForceGenerator* f : _forcesG) {
 			if (f->_type == ForceGenerator::WIND) {
-				if(f->getForce(_linearVel).magnitude() > 1 && f->getForce(_linearVel).magnitude() < 100)
+				if (f->getForce(_linearVel).magnitude() > 1 && f->getForce(_linearVel).magnitude() < 1000)
 					_newSolid->addForce(f->getForce(_linearVel), PxForceMode::eFORCE);
 			}
 			

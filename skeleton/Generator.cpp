@@ -81,16 +81,22 @@ void Generator::addEnemies() {
 	for (int i = 0; i < _enemyPositions.size(); ++i)
 	{
 		_c = { 1,0,0,1 };
-		_pS->addRBEnemies(_enemyPositions[i], Vector3(0,0,0), _maxDis, _maxTime * 10, _c, _mass, _forces);
+		_pS->addRBEnemies(_enemyPositions[i], Vector3(0,0,0), _maxDis, _maxTime, _c, _mass, _forces);
 		cout << "enemigo" << endl;
 	}
 }
 
 void Generator::addRandomEnemy() {
-	std::uniform_int_distribution<int> distribution(0, _enemyPositions.size() - 1);
-	int randomIndex = distribution(gen);  
+	int randomIndex;
+	do {
+		std::uniform_int_distribution<int> distribution(0, _enemyPositions.size() - 1);
+		randomIndex = distribution(gen);  
 
-	_pS->addRBEnemies(_enemyPositions[randomIndex], Vector3(0, 0, 0), _maxDis, _maxTime * 10, _c, _mass, _forces);
+	} while (_prevPos == _enemyPositions[randomIndex]);
+	_c = { 1,0,0,1 };
+	cout << _enemyPositions[randomIndex].x << " " << _enemyPositions[randomIndex].y << " " << _enemyPositions[randomIndex].z << endl;
+	_pS->addRBEnemies(_enemyPositions[randomIndex], Vector3(0, 0, 0), _maxDis, _maxTime, _c, _mass, _forces);
+	_prevPos = _enemyPositions[randomIndex];
 }
 
 void Generator::addForceGenerator(ForceGenerator* fG) {

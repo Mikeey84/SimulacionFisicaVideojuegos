@@ -31,7 +31,7 @@ void Pistol::update(double t) {
 	if (_canShoot) { // Dispara 
 		// Añadir Rb
 		_pS->addRBParticlesC(_cam->getTransform().p, _cam->getDir() * _vel, 1000, 1000, { 1.0, 0.843, 0.0, 1 },
-			10, _pS->_forcesModelGravity);
+			10, _pS->_forcesModelGravityWind, 50);
 
 		_canShoot = false; 
 	}
@@ -57,7 +57,7 @@ void Rafaga::update(double t) {
 	if (_canShoot && _lastTimeAdd > _timeBetShoot) { // Dispara 
 		// Añadir Rb
 		_pS->addRBParticlesC(_cam->getTransform().p, _cam->getDir() * _vel, 1000, 1000, { 1.0, 0.843, 0.0, 1 },
-			10, _pS->_forcesModelGravity);
+			10, _pS->_forcesModelGravity, 10);
 
 		_lastTimeAdd = 0;
 		_index++;

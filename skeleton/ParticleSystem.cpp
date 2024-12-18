@@ -6,7 +6,7 @@ ParticleSystem::ParticleSystem(PxPhysics* gPhysics, PxScene* gScene) : _gPhysics
 	_forcesModelGravity.push_back(new GravityGenerator(this, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, -10, 0)));
 	_forcesModelGravityWind.push_back(new GravityGenerator(this, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, -10, 0)));
 	_forcesModelGravityWind.push_back(new WindGenerator(this, Vector3(0, 0, 0), Vector3(0, 0, 0), 
-		Vector3(30, 0, 0), 0.2, 0, true));
+		Vector3(600, 0, 0), 0.2, 0, true));
 }
 
 void ParticleSystem::update(double t) {
@@ -20,10 +20,10 @@ void ParticleSystem::update(double t) {
 		checkDeath(p);
 	}
 	for (SolidoRigido* s : _solidosRigidos) {
-		s->update();
+		s->update(t);
 	}
 	for (SolidoRigido* s : _solidosEnemigos) {
-		s->update();
+		s->update(t);
 	}
 	for (Gun* g : _guns) {
 		g->update(t);
@@ -40,6 +40,10 @@ void ParticleSystem::update(double t) {
 	}
 	for (SolidoRigido* p : _enemigosToErase) {
 		auto it = find(_solidosEnemigos.begin(), _solidosEnemigos.end(), p);
+		addRandomEnemy();
+		p->_newSolid->setLinearVelocity({ 0, 0, 0 });
+		p->_newSolid->setAngularVelocity({ 0, 0, 0 });
+		p->_newSolid->clearForce();
 		_solidosEnemigos.erase(it);
 		delete p;
 	}
@@ -68,8 +72,8 @@ void ParticleSystem::addRBParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double m
 	p->addForceGenerator(fG);
 }
 
-void ParticleSystem::addRBParticlesC(PxVec3 pos, PxVec3 vel, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG) {
-	SolidoRigido* p = new SolidoRigido(this, _gPhysics, _gScene, &PxTransform(pos), vel, maxDis, maxTime, mass, color);
+void ParticleSystem::addRBParticlesC(PxVec3 pos, PxVec3 vel, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG, int points) {
+	SolidoRigido* p = new SolidoRigido(this, _gPhysics, _gScene, &PxTransform(pos), vel, maxDis, maxTime, mass, points, color);
 	_solidosRigidos.push_back(p);
 	p->addForceGenerator(fG);
 }

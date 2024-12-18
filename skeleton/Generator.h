@@ -46,15 +46,14 @@ public:
 
 	// Para enemigos
 	std::vector<Vector3> _enemyPositions = {
-	{ 0, 10, 0 },            // Suelo
-	{ -50, 25, 0 },         // Pared izquierda
-	{ 50, 25, 0 },          // Pared derecha
-	{ -10, 5, -20 },        // Caja izquierda
-	{ 10, 5, -20 },         // Caja derecha
-	{ 0, 15, -20 },         // Caja central
-	{ -20, 5, 10 },         // Rampa izquierda
-	{ 20, 5, 10 }           // Rampa derecha
+	{ 0, 2, 0 },            // Suelo
+	{ -50, 2, 0 },         // Pared izquierda
+	{ -10, 2, -20 },        // Caja izquierda
+	{ 0, 11, -20 },         // Caja central
+	{ -20, 6, 10 },         // Rampa izquierda
+	{ 20, 6, 10 }           // Rampa derecha
 	};
+	Vector3 _prevPos;
 	void addEnemies();
 	void addRandomEnemy();
 	std::random_device rd;

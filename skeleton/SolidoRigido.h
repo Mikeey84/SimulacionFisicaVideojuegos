@@ -18,7 +18,7 @@ public:
 		double maxDis, double maxTime, float mass, Vector4 color = Vector4{ 1,1,1,1 });
 
 	SolidoRigido(ParticleSystem* ps, PxPhysics* gPhysics, PxScene* gScene, PxTransform* gTransform, Vector3 linearVel,
-		double maxDis, double maxTime, float mass, Vector4 color = Vector4{ 1,1,1,1 });
+		double maxDis, double maxTime, float mass, int points, Vector4 color = Vector4{ 1,1,1,1 });
 
 	~SolidoRigido() {
 		DeregisterRenderItem(_dynamicItem); //deregistrar el item
@@ -28,7 +28,8 @@ public:
 		_dynamicItem = nullptr;
 	};
 	void addForceGenerator(vector<ForceGenerator*> _fGs);
-	void update();
+	void update(double t);
+	double _livingTime = 0;
 	PxRigidDynamic* _newSolid;
 	vector<ForceGenerator*> _forcesG;
 	PxVec3 _linearVel;
@@ -42,6 +43,8 @@ public:
 	ParticleSystem* _pS = nullptr;
 	bool _isAlive = true;
 	bool _bola;
+	int _points;
+	Vector3 _initialPos;
 	RenderItem* _dynamicItem;
 };
 

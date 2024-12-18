@@ -16,7 +16,7 @@
 #include <vector>
 #include "GeneraEscenaFinal.h"
 
-std::string display_text = "This is a test";
+std::string display_text;
 
 
 using namespace physx;
@@ -179,9 +179,9 @@ void initPhysics(bool interactive)
 	//Armas
 	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 50, 10, 0.5);
 	sParticleSystem->addGun(sPistol);
-	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 50, 10);
+	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 70, 10);
 	sParticleSystem->addGun(sRafaga);
-	sParticleSystem->addGenerator(Generator::ENEMY, PxVec3(0, 10, 0), 1, 100, 10000, -5, 5, 30, 35, -5, 5, 1, 5);
+	sParticleSystem->addGenerator(Generator::ENEMY, PxVec3(0, 10, 0), 1, 5, 100, -5, 5, 30, 35, -5, 5, 1, 50);
 	// Escena con las armas
 	EscenaFinal = new GeneraEscenaFinal(GetCamera(), sParticleSystem, gPhysics, gScene, sPistol, sRafaga);
 
@@ -249,15 +249,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case 'B': break;
 	//case ' ':	break;
 	case 'P':
-		std::cout << "Disparo" << endl;
 		sPistol->shoot();
 		break;
 	case 'E':
 		
-		sParticleSystem->addEnemies();
 		break;
 	case 'R':
-		std::cout << "Disparo" << endl;
 		sRafaga->shoot();
 		break;
 	case ' ':
@@ -281,10 +278,20 @@ void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 		}
 		
 	}
-	for (SolidoRigido* s : sParticleSystem->_solidosEnemigos) {
-		if ((actor1 == s->_newSolid || actor2 == s->_newSolid)) { // Si uno de los 2 es una caja
-			if (actor1->getType() != PxActorType::eRIGID_STATIC && actor2->getType() != PxActorType::eRIGID_STATIC) {
-				s->_maxTime = 0;
+	//for (SolidoRigido* s : sParticleSystem->_solidosEnemigos) {
+	//	if ((actor1 == s->_newSolid || actor2 == s->_newSolid)) { // Si uno de los 2 es una caja
+	//		if (actor1->getType() != PxActorType::eRIGID_STATIC && actor2->getType() != PxActorType::eRIGID_STATIC) {
+	//			
+	//		}
+	//	}
+	//}
+	for (SolidoRigido* s1 : sParticleSystem->_solidosRigidos) {
+		for (SolidoRigido* s2 : sParticleSystem->_solidosEnemigos) {
+			if(actor1 == s1->_newSolid && actor2 == s2->_newSolid){
+				s2->_maxTime = 0;
+
+				sPuntos += s1->_points;
+				cout << sPuntos << endl;
 			}
 		}
 	}
