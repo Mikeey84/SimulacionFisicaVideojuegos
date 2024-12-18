@@ -54,6 +54,7 @@ public:
 	void Camera::setDir(const physx::PxVec3& dir) {
 		mDir = dir.getNormalized();
 	}
+	bool _canMove;
 private:
 	physx::PxVec3	mEye;
 	physx::PxVec3	mDir;

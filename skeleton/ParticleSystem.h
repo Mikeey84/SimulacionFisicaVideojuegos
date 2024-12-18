@@ -34,8 +34,11 @@ public:
 	ParticleSystem(PxPhysics* gPhysics, PxScene* gScene);
 	vector<Particle*> _particles;
 	vector<SolidoRigido*> _solidosRigidos;
+	vector<SolidoRigido*> _solidosEnemigos;
+	int _numSolidosToAdd = 0;
 	vector<Particle*> _particlesToErase;
 	vector<SolidoRigido*> _solidosToErase;
+	vector<SolidoRigido*> _enemigosToErase;
 	vector<Generator*> _generators;
 	vector<Gun*> _guns;
 	vector<ForceGenerator*> _forceGenerators;
@@ -46,14 +49,17 @@ public:
 	void addParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG);
 	void addRBParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG);
 	void addRBParticlesC(PxVec3 pos, PxVec3 vel, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG);
+	void addRBEnemies(PxVec3 pos, PxVec3 vel, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG);
 	void addGenerator(Generator::Type type, PxVec3 pos, double time, double maxDis, double maxTime, float x1, float y1, float x2, float y2, float x3, 
 		float y3, float mass, int maxCount);
 	void addForceGenerator(ForceType fT, Vector3 pos, Vector3 area, Vector3 gravity_speed, float k1, float k2, bool easy, double t, double tau);
-
+	
 	void addGun(Gun* g) {
 		_guns.push_back(g);
 	}
 
+	void addEnemies();
+	void addRandomEnemy();
 	void checkDeath(Particle* p);
 	
 	void generateSpringDemo();

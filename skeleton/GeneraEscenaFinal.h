@@ -8,7 +8,7 @@
 #include "SolidoRigido.h"
 #include <vector>
 #include <ostream>
-
+#include "Generator.h"
 
 
 class GeneraEscenaFinal

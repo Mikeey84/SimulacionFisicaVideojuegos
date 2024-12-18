@@ -22,6 +22,12 @@ void ParticleSystem::update(double t) {
 	for (SolidoRigido* s : _solidosRigidos) {
 		s->update();
 	}
+	for (SolidoRigido* s : _solidosEnemigos) {
+		s->update();
+	}
+	for (Gun* g : _guns) {
+		g->update(t);
+	}
 	for (Particle* p : _particlesToErase) {
 		auto it = find(_particles.begin(), _particles.end(), p);
 		_particles.erase(it);
@@ -32,13 +38,22 @@ void ParticleSystem::update(double t) {
 		_solidosRigidos.erase(it);
 		delete p;
 	}
-	for (Gun* g : _guns) {
-		g->update(t);
+	for (SolidoRigido* p : _enemigosToErase) {
+		auto it = find(_solidosEnemigos.begin(), _solidosEnemigos.end(), p);
+		_solidosEnemigos.erase(it);
+		delete p;
 	}
+	for (int i = 0; i < _numSolidosToAdd; ++i) {
+		for (Generator* g : _generators) {
+			if (g->_type == Generator::ENEMY) g->addRandomEnemy();
+		}
+	}
+	
 
 	_particlesToErase.clear();
 	_solidosToErase.clear();
-	
+	_enemigosToErase.clear();
+	_numSolidosToAdd = 0;
 }
 
 void ParticleSystem::addParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG) {
@@ -56,6 +71,12 @@ void ParticleSystem::addRBParticles(PxVec3 pos, PxVec3 vel, PxVec3 acc, double m
 void ParticleSystem::addRBParticlesC(PxVec3 pos, PxVec3 vel, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG) {
 	SolidoRigido* p = new SolidoRigido(this, _gPhysics, _gScene, &PxTransform(pos), vel, maxDis, maxTime, mass, color);
 	_solidosRigidos.push_back(p);
+	p->addForceGenerator(fG);
+}
+
+void ParticleSystem::addRBEnemies(PxVec3 pos, PxVec3 vel, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG) {
+	SolidoRigido* p = new SolidoRigido(this, _gPhysics, _gScene, &PxTransform(pos), vel, {0,0,0}, maxDis, maxTime, mass, color);
+	_solidosEnemigos.push_back(p);
 	p->addForceGenerator(fG);
 }
 
@@ -84,6 +105,16 @@ void ParticleSystem::addForceGenerator(ForceType fT, Vector3 pos, Vector3 area, 
 	default:
 		break;
 	}
+}
+
+void ParticleSystem::addEnemies() {
+	for (Generator* g : _generators) {
+		if (g->_type == Generator::ENEMY) g->addEnemies();
+	}
+}
+
+void ParticleSystem::addRandomEnemy() {
+	_numSolidosToAdd++;
 }
 
 void ParticleSystem::checkDeath(Particle* p) {

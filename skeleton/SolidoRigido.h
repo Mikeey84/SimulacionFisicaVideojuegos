@@ -41,6 +41,7 @@ public:
 	float _mass;
 	ParticleSystem* _pS = nullptr;
 	bool _isAlive = true;
+	bool _bola;
 	RenderItem* _dynamicItem;
 };
 

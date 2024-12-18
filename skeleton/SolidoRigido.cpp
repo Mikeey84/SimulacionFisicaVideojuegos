@@ -13,9 +13,9 @@ SolidoRigido::SolidoRigido(ParticleSystem* pS, PxPhysics* gPhysics, PxScene* gSc
 	PxRigidBodyExt::updateMassAndInertia(*_newSolid, 0.15);
 	gScene->addActor(*_newSolid);
 	_newSolid->setMass(_mass);
-	
 	_dynamicItem = new RenderItem(shape_ad, _newSolid, color);
 	RegisterRenderItem(_dynamicItem);
+	_bola = false;
 }
 
 SolidoRigido::SolidoRigido(ParticleSystem* pS, PxPhysics* gPhysics, PxScene* gScene, PxTransform* gTransform, Vector3 linearVel,
@@ -31,6 +31,7 @@ SolidoRigido::SolidoRigido(ParticleSystem* pS, PxPhysics* gPhysics, PxScene* gSc
 	_newSolid->setMass(_mass);
 	_dynamicItem = new RenderItem(shape_ad, _newSolid, color);
 	RegisterRenderItem(_dynamicItem);
+	_bola = true;
 }
 
 void SolidoRigido::addForceGenerator(vector<ForceGenerator*> _fGs) {
@@ -42,16 +43,27 @@ void SolidoRigido::addForceGenerator(vector<ForceGenerator*> _fGs) {
 
 void SolidoRigido::update() {
 	if (_maxTime == 0 && _isAlive) {
-		_pS->_solidosToErase.push_back(this);
+		if (_bola) {
+			_pS->_solidosToErase.push_back(this);
+		}
+		else {
+			_pS->_enemigosToErase.push_back(this);
+		}
+
+
 		_isAlive = false;
 	}
 	else {
 		for (ForceGenerator* f : _forcesG) {
 			if (f->_type == ForceGenerator::WIND) {
-				_newSolid->addForce(f->getForce(_linearVel), PxForceMode::eFORCE);
+				if(f->getForce(_linearVel).magnitude() > 1 && f->getForce(_linearVel).magnitude() < 100)
+					_newSolid->addForce(f->getForce(_linearVel), PxForceMode::eFORCE);
 			}
-			else
-				_newSolid->addForce(f->getForce(_pos->p), PxForceMode::eFORCE);
+			
+			else{
+				if(f->getForce(_pos->p).magnitude() > 1 && f->getForce(_pos->p).magnitude() < 100)
+					_newSolid->addForce(f->getForce(_pos->p), PxForceMode::eFORCE);
+			}
 		}
 	}
 	

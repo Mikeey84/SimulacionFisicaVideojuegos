@@ -52,12 +52,12 @@ Pistol* sPistol;
 Rafaga* sRafaga;
 
 GeneraEscenaFinal* EscenaFinal;
-
+int sPuntos = 0;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-
+	//glutFullScreen();
 	gFoundation = PxCreateFoundation(PX_FOUNDATION_VERSION, gAllocator, gErrorCallback);
 
 	gPvd = PxCreatePvd(*gFoundation);
@@ -181,7 +181,7 @@ void initPhysics(bool interactive)
 	sParticleSystem->addGun(sPistol);
 	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 50, 10);
 	sParticleSystem->addGun(sRafaga);
-
+	sParticleSystem->addGenerator(Generator::ENEMY, PxVec3(0, 10, 0), 1, 100, 10000, -5, 5, 30, 35, -5, 5, 1, 5);
 	// Escena con las armas
 	EscenaFinal = new GeneraEscenaFinal(GetCamera(), sParticleSystem, gPhysics, gScene, sPistol, sRafaga);
 
@@ -249,14 +249,15 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case 'B': break;
 	//case ' ':	break;
 	case 'P':
+		std::cout << "Disparo" << endl;
 		sPistol->shoot();
 		break;
 	case 'E':
-		explosion->explosion();
-		explosion->_t = 0.1;
-		explosion->_tau = 0.1;
+		
+		sParticleSystem->addEnemies();
 		break;
 	case 'R':
+		std::cout << "Disparo" << endl;
 		sRafaga->shoot();
 		break;
 	case ' ':
@@ -274,9 +275,17 @@ void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 	PX_UNUSED(actor2);
 
 	for(SolidoRigido* s : sParticleSystem->_solidosRigidos){
-		if (actor1 == s->_newSolid || actor2 == s->_newSolid) {
+
+		if ((actor1 == s->_newSolid || actor2 == s->_newSolid)) {
 			s->_maxTime = 0;
-			std::cout << "Se elimina" << std::endl;
+		}
+		
+	}
+	for (SolidoRigido* s : sParticleSystem->_solidosEnemigos) {
+		if ((actor1 == s->_newSolid || actor2 == s->_newSolid)) { // Si uno de los 2 es una caja
+			if (actor1->getType() != PxActorType::eRIGID_STATIC && actor2->getType() != PxActorType::eRIGID_STATIC) {
+				s->_maxTime = 0;
+			}
 		}
 	}
 }

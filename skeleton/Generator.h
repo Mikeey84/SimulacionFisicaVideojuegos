@@ -17,7 +17,8 @@ public:
 		UNIFORM,
 		UNIFORM_RB,
 		GAUSS,
-		GAUSS_RB
+		GAUSS_RB,
+		ENEMY
 	};
 	Generator(ParticleSystem* pS, Type type, PxVec3 pos, double time, double maxDis, double maxTime, float x1, float y1, 
 		float x2, float y2, float x3, 
@@ -42,5 +43,21 @@ public:
 	};
 	vector<ForceGenerator*> _forces;
 	void addForceGenerator(ForceGenerator* fG);
+
+	// Para enemigos
+	std::vector<Vector3> _enemyPositions = {
+	{ 0, 10, 0 },            // Suelo
+	{ -50, 25, 0 },         // Pared izquierda
+	{ 50, 25, 0 },          // Pared derecha
+	{ -10, 5, -20 },        // Caja izquierda
+	{ 10, 5, -20 },         // Caja derecha
+	{ 0, 15, -20 },         // Caja central
+	{ -20, 5, 10 },         // Rampa izquierda
+	{ 20, 5, 10 }           // Rampa derecha
+	};
+	void addEnemies();
+	void addRandomEnemy();
+	std::random_device rd;
+	std::mt19937 gen;
 };
 

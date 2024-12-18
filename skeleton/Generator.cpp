@@ -35,7 +35,6 @@ void Generator::update(double t) {
 				_count++;
 			}
 			break;
-
 		case GAUSS_RB:
 			if (_count < _maxCount) {
 				_pS->addRBParticles(_pos, { generateGauss(_x1, _y1), generateGauss(_x2,_y2), generateGauss(_x3, _y3) },
@@ -44,6 +43,15 @@ void Generator::update(double t) {
 				_count++;
 			}
 			break;
+		case ENEMY:
+			if (_count < _maxCount) {
+				//_pS->addRBParticles(_pos, { generateGauss(_x1, _y1), generateGauss(_x2,_y2), generateGauss(_x3, _y3) },
+				//	{ 0.0f,0.0f,0.0f }, _maxDis, _maxTime, _c, _mass, _forces);
+				_lastTimeAdd = 0;
+				_count++;
+			}
+			break;
+
 		}
 	}
 }
@@ -67,6 +75,22 @@ float Generator::generateUniform(float min, float max) {
 
 	return distrib(gen);
 
+}
+
+void Generator::addEnemies() {
+	for (int i = 0; i < _enemyPositions.size(); ++i)
+	{
+		_c = { 1,0,0,1 };
+		_pS->addRBEnemies(_enemyPositions[i], Vector3(0,0,0), _maxDis, _maxTime * 10, _c, _mass, _forces);
+		cout << "enemigo" << endl;
+	}
+}
+
+void Generator::addRandomEnemy() {
+	std::uniform_int_distribution<int> distribution(0, _enemyPositions.size() - 1);
+	int randomIndex = distribution(gen);  
+
+	_pS->addRBEnemies(_enemyPositions[randomIndex], Vector3(0, 0, 0), _maxDis, _maxTime * 10, _c, _mass, _forces);
 }
 
 void Generator::addForceGenerator(ForceGenerator* fG) {
