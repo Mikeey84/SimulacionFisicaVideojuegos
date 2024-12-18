@@ -10,7 +10,7 @@ SolidoRigido::SolidoRigido(ParticleSystem* pS, PxPhysics* gPhysics, PxScene* gSc
 	_newSolid->setAngularVelocity(angularVel);
 	PxShape* shape_ad = CreateShape(PxBoxGeometry(2, 2, 2));
 	_newSolid->attachShape(*shape_ad);
-	PxRigidBodyExt::updateMassAndInertia(*_newSolid, 0.15);
+	PxRigidBodyExt::updateMassAndInertia(*_newSolid, 0.5);
 	gScene->addActor(*_newSolid);
 	_newSolid->setMass(_mass);
 	_dynamicItem = new RenderItem(shape_ad, _newSolid, color);
@@ -72,4 +72,5 @@ void SolidoRigido::update(double t) {
 	}
 	
 }
+
 

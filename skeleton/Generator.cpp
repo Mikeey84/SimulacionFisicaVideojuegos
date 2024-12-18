@@ -94,7 +94,7 @@ void Generator::addRandomEnemy() {
 
 	} while (_prevPos == _enemyPositions[randomIndex]);
 	_c = { 1,0,0,1 };
-	cout << _enemyPositions[randomIndex].x << " " << _enemyPositions[randomIndex].y << " " << _enemyPositions[randomIndex].z << endl;
+
 	_pS->addRBEnemies(_enemyPositions[randomIndex], Vector3(0, 0, 0), _maxDis, _maxTime, _c, _mass, _forces);
 	_prevPos = _enemyPositions[randomIndex];
 }

@@ -40,12 +40,10 @@ void ParticleSystem::update(double t) {
 	}
 	for (SolidoRigido* p : _enemigosToErase) {
 		auto it = find(_solidosEnemigos.begin(), _solidosEnemigos.end(), p);
-		addRandomEnemy();
-		p->_newSolid->setLinearVelocity({ 0, 0, 0 });
-		p->_newSolid->setAngularVelocity({ 0, 0, 0 });
-		p->_newSolid->clearForce();
+		
 		_solidosEnemigos.erase(it);
 		delete p;
+		addRandomEnemy();
 	}
 	for (int i = 0; i < _numSolidosToAdd; ++i) {
 		for (Generator* g : _generators) {
@@ -81,6 +79,10 @@ void ParticleSystem::addRBParticlesC(PxVec3 pos, PxVec3 vel, double maxDis, doub
 void ParticleSystem::addRBEnemies(PxVec3 pos, PxVec3 vel, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG) {
 	SolidoRigido* p = new SolidoRigido(this, _gPhysics, _gScene, &PxTransform(pos), vel, {0,0,0}, maxDis, maxTime, mass, color);
 	_solidosEnemigos.push_back(p);
+	std::cout << "Enemy position: " << pos.x << pos.y << pos.z
+		<< ", velocity: " << vel.x << vel.y << vel.z
+		<< ", force: " << fG[0]->_force.x << fG[0]->_force.y << fG[0]->_force.z
+		<< ", mass: " << mass << std::endl;
 	p->addForceGenerator(fG);
 }
 

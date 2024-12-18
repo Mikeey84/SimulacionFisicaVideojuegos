@@ -181,7 +181,8 @@ void initPhysics(bool interactive)
 	sParticleSystem->addGun(sPistol);
 	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 70, 10);
 	sParticleSystem->addGun(sRafaga);
-	sParticleSystem->addGenerator(Generator::ENEMY, PxVec3(0, 10, 0), 1, 5, 100, -5, 5, 30, 35, -5, 5, 1, 50);
+	sParticleSystem->addGenerator(Generator::ENEMY, PxVec3(0, 10, 0), 1, 10, 100, 0, 0, 0, 0, 0, 0, 10, 50);
+	sParticleSystem->_generators[0]->addForceGenerator(gravity);
 	// Escena con las armas
 	EscenaFinal = new GeneraEscenaFinal(GetCamera(), sParticleSystem, gPhysics, gScene, sPistol, sRafaga);
 
@@ -289,7 +290,7 @@ void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 		for (SolidoRigido* s2 : sParticleSystem->_solidosEnemigos) {
 			if(actor1 == s1->_newSolid && actor2 == s2->_newSolid){
 				s2->_maxTime = 0;
-
+				
 				sPuntos += s1->_points;
 				cout << sPuntos << endl;
 			}
