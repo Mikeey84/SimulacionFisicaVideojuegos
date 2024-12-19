@@ -18,14 +18,19 @@
 
 std::string display_text = "PULSA \u0022ESPACIO\u0022 PARA EMPEZAR EL JUEGO";
 std::string display_text2 = "SHOOT`EM";
+std::string timeText = " ";
 
 float _scale = 0.5;
 float _scale2 = 1;
+float _scale3;
 float _w = 1920 / 2 - 500;
 float _w2 = 1920 / 2 - 400;
+float _w3;
 float _h = 10;
 float _h2 = 500;
+float _h3;
 int sPuntos = 0;
+bool _cross = false;
 using namespace physx;
 
 PxDefaultAllocator		gAllocator;
@@ -70,7 +75,7 @@ void initGame()
 	_scale2 = 0.4;
 	_w = 2.1e3;
 	_h = 2500;
-	
+	_cross = true;
 	sParticleSystem->addGenerator(Generator::ENEMY, PxVec3(0, 10, 0), 1, 10, 100, 0, 0, 0, 0, 0, 0, 10, 50);
 	sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(0, 40, 70), 0.1, 60, 1000, -10, 10, 0, 0, -10, 10, 100, 150); 
 	sParticleSystem->_generators[1]->changeColor(Vector4{ 0, 0, 1, 1 });
@@ -213,7 +218,7 @@ void initPhysics(bool interactive)
 	//Armas
 	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 50, 10, 0.5);
 	sParticleSystem->addGun(sPistol);
-	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 70, 10);
+	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 100, 10);
 	sParticleSystem->addGun(sRafaga);
 	EscenaFinal = new GeneraEscenaFinal(GetCamera(), sParticleSystem, gPhysics, gScene, sPistol, sRafaga);
 
@@ -227,6 +232,8 @@ void initPhysics(bool interactive)
 
 void end() {
 	display_text = "Se acabo. Hiciste " + to_string(sPuntos) + " puntos!";
+	display_text2 = "";
+	timeText = "";
 	_scale = 1;
 	_w = 0;
 	_h = 500;
@@ -256,8 +263,8 @@ void stepPhysics(bool interactive, double t) // pasar la t
 	if (EscenaFinal != nullptr) {
 		EscenaFinal->update(t);
 		if (EscenaFinal->_start) {
-			EscenaFinal->_time += t;
-			if (EscenaFinal->_time > EscenaFinal->_maxTime) {
+			EscenaFinal->_time -= t;
+			if (EscenaFinal->_time < EscenaFinal->_maxTime) {
 				end();
 			}
 		}

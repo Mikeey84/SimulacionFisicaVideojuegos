@@ -24,9 +24,9 @@ public:
 	Rafaga* _sRafaga = nullptr;
 	Camera* _cam = nullptr;
 	bool _start = false;
-	double _time = 0;
+	double _time = 15;
 	void update(double t);
-	double _maxTime = 15;
+	double _maxTime = 0;
 	void addEnemy() {
 		_pS->addRandomEnemy();
 		_cam->setEye({ 0,15,70 });

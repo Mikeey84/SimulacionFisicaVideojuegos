@@ -66,8 +66,12 @@ void GeneraEscenaFinal::CreateRamp(PxVec3 position, PxVec3 dimensions, PxVec4 co
 }
 
 void GeneraEscenaFinal::update(double t) {
-
+    if (_start) {
+        timeText = "Tiempo restante: " + to_string(_time);
+        _w3 = 0;
+        _h3 = 2000;
+        _scale3 = 0.4;
+    }
     
-
 }
 

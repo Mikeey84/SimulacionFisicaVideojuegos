@@ -49,13 +49,18 @@
 
 extern std::string display_text;
 extern std::string display_text2;
+extern std::string timeText;
 extern float _scale;
 extern float _scale2;
+extern float _scale3;
 extern float _w;
 extern float _w2;
+extern float _w3;
 extern float _h;
 extern float _h2;
+extern float _h3;
 extern int sPuntos; 
+extern bool _cross;
 namespace Snippets
 {
 void setupDefaultWindow(const char* name);
@@ -67,6 +72,8 @@ void renderActors(physx::PxRigidActor** actors, const physx::PxU32 numActors, bo
 void finishRender();
 void drawText(const std::string& text, int x, int y, float scale);
 void drawText2(const std::string& text, int x, int y, float scale);
+void drawTime(const std::string& text, int x, int y, float scale);
+void drawCross();
 }
 #define MAX_NUM_ACTOR_SHAPES 128
 

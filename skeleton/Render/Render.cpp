@@ -290,6 +290,9 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
 	drawText(display_text, _w, _h, _scale);
 	drawText2(display_text2, _w2, _h2, _scale2);
+	drawTime(timeText, _w3, _h3, _scale3);
+	if(_cross)
+		drawCross();
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -428,6 +431,55 @@ void drawText2(const std::string& text, int x, int y, float scale)
 	glPopMatrix();
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixd(matrix);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void drawTime(const std::string& text, int x, int y, float scale)
+{
+	glMatrixMode(GL_PROJECTION);
+	double* matrix = new double[16];
+	glGetDoublev(GL_PROJECTION_MATRIX, matrix);
+	glLoadIdentity();
+	glOrtho(0, 1920, 0, 1080, -1, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glPushMatrix();
+	//glLoadIdentity();
+	glRasterPos2i(x, y);
+	glScalef(scale, scale, scale);
+	glTranslatef(_w3, _h3, 0);
+
+	int length = text.length();
+	for (char l : text) {
+		glutStrokeCharacter(GLUT_STROKE_ROMAN, l);
+	}
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixd(matrix);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void drawCross()
+{
+	glMatrixMode(GL_PROJECTION);
+	double matrix[16];
+	glGetDoublev(GL_PROJECTION_MATRIX, matrix); // Guardar la proyección actual
+	glLoadIdentity();
+	glOrtho(0, 1920, 0, 1080, -1, 1);           // Configurar coordenadas 2D
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glColor3f(0, 1, 0); // Establecer color
+	glLineWidth(2.0f);  // Ancho de línea
+	glBegin(GL_LINES);
+	// Línea horizontal
+	glVertex2f(960 - 10, 540); // Centro menos el tamaño de la línea
+	glVertex2f(960 + 10, 540); // Centro más el tamaño de la línea
+	// Línea vertical
+	glVertex2f(960, 540 - 10);
+	glVertex2f(960, 540 + 10);
+	glEnd();
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixd(matrix); // Restaurar la proyección original
 	glMatrixMode(GL_MODELVIEW);
 }
 
