@@ -287,8 +287,8 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Display text
-	glColor4f(1.0f, 0.2f, 0.2f, 1.0f);
-	drawText(display_text, 0, 0);
+	glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+	drawText(display_text, GLUT_WINDOW_WIDTH * 2, GLUT_WINDOW_HEIGHT * 4.5);
 
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);
@@ -304,6 +304,16 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	assert(glGetError() == GL_NO_ERROR);
 }
 
+void changeText(int w, int h, const physx::PxVec4& color) {
+	/*if (w == -1) {
+		_w = GLUT_WINDOW_WIDTH * 2;
+	}
+	if (h == -1) {
+		_h = GLUT_WINDOW_HEIGHT * 4;
+	}
+	_w = w;
+	_h = h;*/
+}
 void renderShape(const PxShape& shape, const PxTransform& transform, const PxVec4& color)
 {
 	PxGeometryHolder h = shape.getGeometry();

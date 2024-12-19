@@ -23,6 +23,9 @@ public:
 	Pistol* _sPistol = nullptr;
 	Rafaga* _sRafaga = nullptr;
 	Camera* _cam = nullptr;
-
+	bool _start = false;
+	double _time = 0;
+	void update(double t);
+	double _maxTime = 15000;
 };
 

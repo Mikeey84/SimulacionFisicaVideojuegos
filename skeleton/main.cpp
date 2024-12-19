@@ -16,7 +16,7 @@
 #include <vector>
 #include "GeneraEscenaFinal.h"
 
-std::string display_text;
+std::string display_text = "PULSA \u0022ESPACIO\u0022 PARA EMPEZAR EL JUEGO";
 
 
 using namespace physx;
@@ -53,6 +53,29 @@ Rafaga* sRafaga;
 
 GeneraEscenaFinal* EscenaFinal;
 int sPuntos = 0;
+
+void initGame() 
+{
+	display_text = "Puntos " + to_string(sPuntos);
+	changeText(0, 0, PxVec4(0,0,0,1));
+	//Armas
+	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 50, 10, 0.5);
+	sParticleSystem->addGun(sPistol);
+	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 70, 10);
+	sParticleSystem->addGun(sRafaga);
+	sParticleSystem->addGenerator(Generator::ENEMY, PxVec3(0, 10, 0), 1, 10, 100, 0, 0, 0, 0, 0, 0, 10, 50);
+	sParticleSystem->_generators[0]->addForceGenerator(gravity);
+	// Escena con las armas
+	EscenaFinal = new GeneraEscenaFinal(GetCamera(), sParticleSystem, gPhysics, gScene, sPistol, sRafaga);
+	EscenaFinal->_start = true;
+}
+
+void menuPrincipal() 
+{
+
+}
+
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -176,15 +199,7 @@ void initPhysics(bool interactive)
 
 
 	//--------------------------PRACTICAFINAL------------------------------------
-	//Armas
-	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 50, 10, 0.5);
-	sParticleSystem->addGun(sPistol);
-	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 70, 10);
-	sParticleSystem->addGun(sRafaga);
-	sParticleSystem->addGenerator(Generator::ENEMY, PxVec3(0, 10, 0), 1, 10, 100, 0, 0, 0, 0, 0, 0, 10, 50);
-	sParticleSystem->_generators[0]->addForceGenerator(gravity);
-	// Escena con las armas
-	EscenaFinal = new GeneraEscenaFinal(GetCamera(), sParticleSystem, gPhysics, gScene, sPistol, sRafaga);
+
 
 
 
@@ -213,7 +228,8 @@ void stepPhysics(bool interactive, double t) // pasar la t
 		}
 	}
 	sParticleSystem->update(t);
-	
+	if(EscenaFinal != nullptr)
+		EscenaFinal->update(t);
 }
 
 // Function to clean data
@@ -260,6 +276,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case ' ':
 	{
+		initGame();
 		break;
 	}
 	default:
@@ -292,7 +309,7 @@ void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 				s2->_maxTime = 0;
 				
 				sPuntos += s1->_points;
-				cout << sPuntos << endl;
+				display_text = "Puntos " + to_string(sPuntos);
 			}
 		}
 	}

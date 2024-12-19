@@ -137,7 +137,6 @@ void exitCallback(void)
 	cleanupPhysics(true);
 }
 }
-
 void renderLoop()
 {
 	StartCounter();
