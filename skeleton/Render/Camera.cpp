@@ -85,20 +85,23 @@ void Camera::handleAnalogMove(float x, float y)
 
 void Camera::handleMotion(int x, int y)
 {
-	int dx = mMouseX - x;
-	int dy = mMouseY - y;
+	if (_canLook) {
+		int dx = mMouseX - x;
+		int dy = mMouseY - y;
 
-	PxVec3 viewY = mDir.cross(PxVec3(0,1,0)).getNormalized();
+		PxVec3 viewY = mDir.cross(PxVec3(0, 1, 0)).getNormalized();
 
-	PxQuat qx(PxPi * dx / 180.0f, PxVec3(0,1,0));
-	mDir = qx.rotate(mDir);
-	PxQuat qy(PxPi * dy / 180.0f, viewY);
-	mDir = qy.rotate(mDir);
+		PxQuat qx(PxPi * dx / 180.0f, PxVec3(0, 1, 0));
+		mDir = qx.rotate(mDir);
+		PxQuat qy(PxPi * dy / 180.0f, viewY);
+		mDir = qy.rotate(mDir);
 
-	mDir.normalize();
+		mDir.normalize();
 
-	mMouseX = x;
-	mMouseY = y;
+		mMouseX = x;
+		mMouseY = y;
+	}
+	
 }
 
 PxTransform Camera::getTransform() const

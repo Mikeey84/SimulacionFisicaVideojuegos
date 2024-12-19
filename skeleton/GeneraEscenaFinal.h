@@ -27,5 +27,11 @@ public:
 	double _time = 0;
 	void update(double t);
 	double _maxTime = 15;
+	void addEnemy() {
+		_pS->addRandomEnemy();
+		_cam->setEye({ 0,15,70 });
+		_cam->setDir({ 0,0,-1 });
+		_cam->_canLook = true;
+	}
 };
 

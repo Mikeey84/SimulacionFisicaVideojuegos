@@ -3,9 +3,8 @@
 GeneraEscenaFinal::GeneraEscenaFinal(Camera* cam, ParticleSystem* pS, PxPhysics* gPhysics, PxScene* gScene, Pistol* sPistol, Rafaga* sRafaga) :
     _pS(pS), _gPhysics(gPhysics), _gScene(gScene), _sPistol(sPistol), _sRafaga(sRafaga), _cam(cam) {
     // Camara
-    _cam->_canMove = true;
-    _cam->setEye({ 0,15,70 });
-    _cam->setDir({ 0,0,-1 });
+    _cam->_canMove = false;
+    
     std::cout << _cam->getTransform().p.x << " " << _cam->getTransform().p.y << " " << _cam->getTransform().p.z;
 
     // Suelo 
@@ -46,7 +45,6 @@ GeneraEscenaFinal::GeneraEscenaFinal(Camera* cam, ParticleSystem* pS, PxPhysics*
     // Rampas 
     CreateRamp({ -20, 5, 10 }, { 20, 5, 10 }, { 0.8, 0.8, 0.8, 1 }); 
     CreateRamp({ 20, 5, 10 }, { 20, 5, 10 }, { 0.8, 0.8, 0.8, 1 });
-    _pS->addRandomEnemy();
 }
 
 void GeneraEscenaFinal::CreateBox(PxVec3 position, PxVec3 dimensions, PxVec4 color) {

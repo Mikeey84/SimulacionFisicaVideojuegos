@@ -70,18 +70,14 @@ void initGame()
 	_scale2 = 0.4;
 	_w = 2.1e3;
 	_h = 2500;
-	//Armas
-	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 50, 10, 0.5);
-	sParticleSystem->addGun(sPistol);
-	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 70, 10);
-	sParticleSystem->addGun(sRafaga);
+	
 	sParticleSystem->addGenerator(Generator::ENEMY, PxVec3(0, 10, 0), 1, 10, 100, 0, 0, 0, 0, 0, 0, 10, 50);
-	sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(0, 40, 70), 0.1, 5, 1000, -10, 10, 0, 0, -10, 10, 100, 150); 
+	sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(0, 40, 70), 0.1, 60, 1000, -10, 10, 0, 0, -10, 10, 100, 150); 
 	sParticleSystem->_generators[1]->changeColor(Vector4{ 0, 0, 1, 1 });
 	sParticleSystem->_generators[1]->addForceGenerator(gravity);
 	//sParticleSystem->_generators[0]->addForceGenerator(gravity);
 	// Escena con las armas
-	EscenaFinal = new GeneraEscenaFinal(GetCamera(), sParticleSystem, gPhysics, gScene, sPistol, sRafaga);
+	
 	EscenaFinal->_start = true;
 }
 
@@ -90,7 +86,7 @@ void initGame()
 void initPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-	//glutFullScreen();
+	glutFullScreen();
 	gFoundation = PxCreateFoundation(PX_FOUNDATION_VERSION, gAllocator, gErrorCallback);
 
 	gPvd = PxCreatePvd(*gFoundation);
@@ -210,8 +206,16 @@ void initPhysics(bool interactive)
 
 	//--------------------------PRACTICAFINAL------------------------------------
 
+	GetCamera()->setEye({ 0,60,70 });
+	GetCamera()->setDir({ 0,-1,-1 });
+	GetCamera()->_canLook = false;
 
-
+	//Armas
+	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 50, 10, 0.5);
+	sParticleSystem->addGun(sPistol);
+	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 70, 10);
+	sParticleSystem->addGun(sRafaga);
+	EscenaFinal = new GeneraEscenaFinal(GetCamera(), sParticleSystem, gPhysics, gScene, sPistol, sRafaga);
 
 	//Registers
 	/*RegisterRenderItem(sSphere);
@@ -229,8 +233,8 @@ void end() {
 	GetCamera()->_canLook = false;
 	GetCamera()->setEye({ 0,15,100 });
 	GetCamera()->setDir({ 0,0,1 });
-	sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0, 0, 150), 1, 1.7, 10000, -10, 10, 20, 25, -10, 10, 1, 1);
-	
+	sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0, -10, 150), 1, 3, 10000, -10, 10, 20, 25, -10, 10, 1, 1);
+	sParticleSystem->_generators[1]->_pos = { 0, 20, 95 };
 }
 
 // Function to configure what happens in each step of physics
@@ -298,20 +302,22 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case 'B': break;
 	//case ' ':	break;
 	case 'P':
-		if(sPistol != nullptr)
+		if(sPistol != nullptr && EscenaFinal->_start)
 			sPistol->shoot();
 		break;
 	case 'E':
 
 		break;
 	case 'R':
-		if (sRafaga != nullptr)
+		if (sRafaga != nullptr && EscenaFinal->_start)
 			sRafaga->shoot();
 		break;
 	case ' ':
 	{
-		if(!EscenaFinal)
+		if (!EscenaFinal->_start) {
 			initGame();
+			EscenaFinal->addEnemy();
+		}
 		break;
 	}
 	default:

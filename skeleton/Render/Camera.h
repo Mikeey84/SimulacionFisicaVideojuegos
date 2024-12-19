@@ -55,7 +55,7 @@ public:
 		mDir = dir.getNormalized();
 	}
 	bool _canMove;
-	bool _canLook = true;
+	bool _canLook;
 private:
 	physx::PxVec3	mEye;
 	physx::PxVec3	mDir;
