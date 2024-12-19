@@ -216,7 +216,7 @@ void initPhysics(bool interactive)
 	GetCamera()->_canLook = false;
 
 	//Armas
-	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 50, 10, 0.5);
+	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 50, 0.8, 0.5);
 	sParticleSystem->addGun(sPistol);
 	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 100, 10);
 	sParticleSystem->addGun(sRafaga);

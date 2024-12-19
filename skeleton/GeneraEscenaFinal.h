@@ -24,7 +24,7 @@ public:
 	Rafaga* _sRafaga = nullptr;
 	Camera* _cam = nullptr;
 	bool _start = false;
-	double _time = 15;
+	double _time = 30;
 	void update(double t);
 	double _maxTime = 0;
 	void addEnemy() {
