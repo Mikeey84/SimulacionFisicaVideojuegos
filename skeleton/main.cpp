@@ -234,6 +234,7 @@ void end() {
 	display_text = "Se acabo. Hiciste " + to_string(sPuntos) + " puntos!";
 	display_text2 = "";
 	timeText = "";
+	_cross = false;
 	_scale = 1;
 	_w = 0;
 	_h = 500;
