@@ -43,6 +43,7 @@ public:
 	PxVec3 _vel;
 	PxTransform _pose;
 	PxVec3 _pos;
+	PxVec3 _initPos;
 	PxVec3 _acc;
 	PxVec3 _area;
 	PxVec4 _color;

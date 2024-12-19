@@ -46,10 +46,10 @@ public:
 
 	// Para enemigos
 	std::vector<Vector3> _enemyPositions = {
-	{ 0, 7, 0 },            // Suelo
+	{ 0, 15, 0 },            // Suelo
 	{ -45, 7, 0 },         // Pared izquierda
 	{ -10, 7, -20 },        // Caja izquierda
-	{ 0, 10, -15 },         // Caja central
+	{ 0, 20, -20 },         // Caja central
 	{ -20, 12, 10 },         // Rampa izquierda
 	{ 20, 10, 10 }           // Rampa derecha
 	};

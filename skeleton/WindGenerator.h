@@ -9,6 +9,7 @@ public:
 	WindGenerator(ParticleSystem* pS, Vector3 pos, Vector3 area, Vector3 windSpeed, float k1, float k2, bool easy);
 	void update(double t, Particle* p) override;
 	Vector3 getForce(Vector3 pos) override;
+	Vector3 getF(Vector3 pos, Vector3 initPos) override { return Vector3(); };
 	float areaOfObject(float radius);
 	Vector3 _windSpeed;
 	ParticleSystem* _pS = nullptr;

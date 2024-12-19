@@ -4,6 +4,7 @@
 
 ParticleSystem::ParticleSystem(PxPhysics* gPhysics, PxScene* gScene) : _gPhysics(gPhysics), _gScene(gScene) { 
 	_forcesModelGravity.push_back(new GravityGenerator(this, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, -10, 0)));
+	_forcesModelGravity.push_back(new BouyancyForceGenerator(this, 8, 10, 2));
 	_forcesModelGravityWind.push_back(new GravityGenerator(this, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, -10, 0)));
 	_forcesModelGravityWind.push_back(new WindGenerator(this, Vector3(0, 0, 0), Vector3(0, 0, 0), 
 		Vector3(600, 0, 0), 0.2, 0, true));
@@ -82,8 +83,10 @@ void ParticleSystem::addRBParticlesC(PxVec3 pos, PxVec3 vel, double maxDis, doub
 void ParticleSystem::addRBEnemies(PxVec3 pos, PxVec3 vel, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG) {
 	SolidoRigido* p = new SolidoRigido(this, _gPhysics, _gScene, &PxTransform(pos), vel, {0,0,0}, maxDis, maxTime, mass, color);
 	_solidosEnemigos.push_back(p);
+	//cout << pos.x << " " << pos.y << " " << pos.z << endl;
 	vector<ForceGenerator*> aux;
 	aux.push_back(new GravityGenerator(this, {0,0,0},{0,0,0}, {0,-10,0}));
+	aux.push_back(new BouyancyForceGenerator(this, 8, 120, 1));
 	p->addForceGenerator(aux);
 }
 

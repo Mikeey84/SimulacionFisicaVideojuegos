@@ -289,7 +289,7 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	// Display text
 	glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
 	drawText(display_text, _w, _h, _scale);
-	drawText2(display_text2, _w2, _h2, _scale);
+	drawText2(display_text2, _w2, _h2, _scale2);
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

@@ -16,12 +16,14 @@ public:
 		WIND,
 		WHIRL,
 		EXPLOSION,
-		SPRING
+		SPRING,
+		BOUYANCY
 	};
 	ForceGenerator(ParticleSystem* pS,Vector3 pos, Vector3 area);
 	
 	virtual void update(double t, Particle* p) = 0;
 	virtual Vector3 getForce(Vector3 pos) = 0;
+	virtual Vector3 getF(Vector3 pos, Vector3 initPos) = 0;
 	bool checkArea(Vector3 pos);
 	bool checkCircleArea(Vector3 pos);
 	Vector3 _force;

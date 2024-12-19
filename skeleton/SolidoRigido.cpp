@@ -67,6 +67,11 @@ void SolidoRigido::update(double t) {
 				if (f->getForce(_pos->p).magnitude() > 1 && f->getForce(_pos->p).magnitude() < 20)
 					_newSolid->addForce(f->getForce(_pos->p), PxForceMode::eFORCE);
 			}
+			else if (f->_type == ForceGenerator::BOUYANCY) {
+				//if (f->getForce(_pos->p).magnitude() > 1 && f->getForce(_pos->p).magnitude() < 20)
+					//cout << f->getF(_pos->p, _initialPos).x << " " << f->getF(_pos->p, _initialPos).y << " " << f->getF(_pos->p, _initialPos).z << endl;
+					_newSolid->addForce(f->getF(_pos->p, _initialPos), PxForceMode::eFORCE);
+			}
 		}
 	}
 	

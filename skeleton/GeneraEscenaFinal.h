@@ -26,6 +26,6 @@ public:
 	bool _start = false;
 	double _time = 0;
 	void update(double t);
-	double _maxTime = 15000;
+	double _maxTime = 15;
 };
 

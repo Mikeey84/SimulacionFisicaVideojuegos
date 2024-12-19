@@ -22,9 +22,9 @@ std::string display_text2 = "SHOOT`EM";
 float _scale = 0.5;
 float _scale2 = 1;
 float _w = 1920 / 2 - 500;
-float _w2 = 1920 - 400;
+float _w2 = 1920 / 2 - 400;
 float _h = 10;
-float _h2 = 1000;
+float _h2 = 500;
 int sPuntos = 0;
 using namespace physx;
 
@@ -54,7 +54,6 @@ ForceGenerator* gravity;
 ForceGenerator* wind;
 ForceGenerator* whirlwind;
 ExplosionGenerator* explosion;
-
 Pistol* sPistol;
 Rafaga* sRafaga;
 
@@ -64,17 +63,22 @@ GeneraEscenaFinal* EscenaFinal;
 void initGame() 
 {
 	display_text = "Puntos " + to_string(sPuntos);
-	display_text2 = "a";
-	_w2 = 10000;
-	_scale = 0.2;
-	_w = 4.4e3;
-	_h = 5e3;
+	display_text2 = "Rafaga = R Curvo P";
+	_w2 = 0;
+	_h2 = 500;
+	_scale = 0.4;
+	_scale2 = 0.4;
+	_w = 2.1e3;
+	_h = 2500;
 	//Armas
 	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 50, 10, 0.5);
 	sParticleSystem->addGun(sPistol);
 	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 70, 10);
 	sParticleSystem->addGun(sRafaga);
 	sParticleSystem->addGenerator(Generator::ENEMY, PxVec3(0, 10, 0), 1, 10, 100, 0, 0, 0, 0, 0, 0, 10, 50);
+	sParticleSystem->addGenerator(Generator::GAUSS, PxVec3(0, 40, 70), 0.1, 5, 1000, -10, 10, 0, 0, -10, 10, 100, 150); 
+	sParticleSystem->_generators[1]->changeColor(Vector4{ 0, 0, 1, 1 });
+	sParticleSystem->_generators[1]->addForceGenerator(gravity);
 	//sParticleSystem->_generators[0]->addForceGenerator(gravity);
 	// Escena con las armas
 	EscenaFinal = new GeneraEscenaFinal(GetCamera(), sParticleSystem, gPhysics, gScene, sPistol, sRafaga);

@@ -4,6 +4,7 @@
 Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxTime, float mass, Vector4 color) :
 	_pos(pos), _vel(vel), _acc(acc), _maxDis(maxDis), _maxTime(maxTime), _mass(mass)
 	{
+	_initPos = pos;
 		PxSphereGeometry geo(1);
 		PxShape* shape = CreateShape(geo);
 		_color = color;
@@ -28,7 +29,7 @@ Particle::Particle(PxVec3 pos, PxVec3 vel, PxVec3 acc, float maxDis, double maxT
 		shape = CreateShape(*geo);
 		_color = { 0,0,1,1 };
 	}
-	
+	_initPos = pos;
 	_area = { abs(pos.x) + _maxDis, abs(pos.y) + _maxDis , abs(pos.z) + _maxDis };
 	_pose = physx::PxTransform(_pos);
 	_renderItem = new RenderItem(shape, &_pose, _color);
