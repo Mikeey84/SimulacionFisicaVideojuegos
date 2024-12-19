@@ -48,7 +48,14 @@
 #include <string>
 
 extern std::string display_text;
-
+extern std::string display_text2;
+extern float _scale;
+extern float _scale2;
+extern float _w;
+extern float _w2;
+extern float _h;
+extern float _h2;
+extern int sPuntos; 
 namespace Snippets
 {
 void setupDefaultWindow(const char* name);
@@ -58,9 +65,8 @@ void startRender(const physx::PxVec3& cameraEye, const physx::PxVec3& cameraDir,
 void renderShape(const physx::PxShape& shape, const physx::PxTransform& transform, const physx::PxVec4& color);
 void renderActors(physx::PxRigidActor** actors, const physx::PxU32 numActors, bool shadows = false, const physx::PxVec4 & color = physx::PxVec4(0.0f, 0.75f, 0.0f, 1.0f));
 void finishRender();
-void drawText(const std::string& text, int x, int y);
-void changeText(int w, int h, const physx::PxVec4& color);
-
+void drawText(const std::string& text, int x, int y, float scale);
+void drawText2(const std::string& text, int x, int y, float scale);
 }
 #define MAX_NUM_ACTOR_SHAPES 128
 

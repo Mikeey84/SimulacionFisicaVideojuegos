@@ -288,8 +288,8 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 
 	// Display text
 	glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
-	drawText(display_text, GLUT_WINDOW_WIDTH * 2, GLUT_WINDOW_HEIGHT * 4.5);
-
+	drawText(display_text, _w, _h, _scale);
+	drawText2(display_text2, _w2, _h2, _scale);
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -302,17 +302,6 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	glColor4f(0.4f, 0.4f, 0.4f, 1.0f);
 
 	assert(glGetError() == GL_NO_ERROR);
-}
-
-void changeText(int w, int h, const physx::PxVec4& color) {
-	/*if (w == -1) {
-		_w = GLUT_WINDOW_WIDTH * 2;
-	}
-	if (h == -1) {
-		_h = GLUT_WINDOW_HEIGHT * 4;
-	}
-	_w = w;
-	_h = h;*/
 }
 void renderShape(const PxShape& shape, const PxTransform& transform, const PxVec4& color)
 {
@@ -392,23 +381,49 @@ void finishRender()
 	glutSwapBuffers();
 }
 
-void drawText(const std::string& text, int x, int y)
+void drawText(const std::string& text, int x, int y, float scale)
 {
 	glMatrixMode(GL_PROJECTION);
 	double* matrix = new double[16];
 	glGetDoublev(GL_PROJECTION_MATRIX, matrix);
 	glLoadIdentity();
-	glOrtho(0, 512, 0, 512, -5, 5);
+	glOrtho(0, 1920, 0, 1080, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glPushMatrix();
 	//glLoadIdentity();
 	glRasterPos2i(x, y);
+	glScalef(scale, scale, scale);
+	glTranslatef(_w, _h, 0);
 
 	int length = text.length();
+	for (char l : text) {
+		glutStrokeCharacter(GLUT_STROKE_ROMAN, l);
+	}
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixd(matrix);
+	glMatrixMode(GL_MODELVIEW);
+}
 
-	for (int i = 0; i < length; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_9_BY_15, (int)text[i]);
+void drawText2(const std::string& text, int x, int y, float scale)
+{
+	glMatrixMode(GL_PROJECTION);
+	double* matrix = new double[16];
+	glGetDoublev(GL_PROJECTION_MATRIX, matrix);
+	glLoadIdentity();
+	glOrtho(0, 1920, 0, 1080, -1, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glPushMatrix();
+	//glLoadIdentity();
+	glRasterPos2i(x, y);
+	glScalef(scale, scale, scale);
+	glTranslatef(_w2, _h2, 0);
+
+	int length = text.length();
+	for (char l : text) {
+		glutStrokeCharacter(GLUT_STROKE_ROMAN, l);
 	}
 	glPopMatrix();
 	glMatrixMode(GL_PROJECTION);

@@ -27,6 +27,7 @@ public:
 	~Particle() {
 
 		DeregisterRenderItem(_renderItem); //deregistrar el item
+		//_renderItem->release();
 		//delete _renderItem;
 		
 		_renderItem = nullptr;
@@ -49,7 +50,7 @@ public:
 	RenderItem* _renderItem = nullptr;
 	float _damping;
 	double _time = 0, _maxTime;
-
+	bool _isAlive = true;
 	PxVec3 _forces = { 0,0,0 }; // Vector aditivo para sumar las fuerzas
 	float _mass;
 	vector<ForceGenerator*> _forcesG;

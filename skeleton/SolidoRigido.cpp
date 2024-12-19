@@ -63,9 +63,8 @@ void SolidoRigido::update(double t) {
 				if (f->getForce(_linearVel).magnitude() > 1 && f->getForce(_linearVel).magnitude() < 1000)
 					_newSolid->addForce(f->getForce(_linearVel), PxForceMode::eFORCE);
 			}
-			
-			else{
-				if(f->getForce(_pos->p).magnitude() > 1 && f->getForce(_pos->p).magnitude() < 100)
+			else if(f->_type == ForceGenerator::GRAVITY){
+				if (f->getForce(_pos->p).magnitude() > 1 && f->getForce(_pos->p).magnitude() < 20)
 					_newSolid->addForce(f->getForce(_pos->p), PxForceMode::eFORCE);
 			}
 		}

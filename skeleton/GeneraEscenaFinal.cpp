@@ -69,11 +69,7 @@ void GeneraEscenaFinal::CreateRamp(PxVec3 position, PxVec3 dimensions, PxVec4 co
 
 void GeneraEscenaFinal::update(double t) {
 
-    if (_start) {
-        _time += t;
-        if (_time > _maxTime) {
-            
-        }
-    }
+    
 
 }
+

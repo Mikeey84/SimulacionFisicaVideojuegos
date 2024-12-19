@@ -18,6 +18,9 @@ void ParticleSystem::update(double t) {
 	for (Particle* p : _particles) {
 		p->integrate(t);
 		checkDeath(p);
+		if (p->_maxTime == 0 && p->_isAlive) {
+			_particlesToErase.push_back(p);
+		}
 	}
 	for (SolidoRigido* s : _solidosRigidos) {
 		s->update(t);
@@ -79,11 +82,9 @@ void ParticleSystem::addRBParticlesC(PxVec3 pos, PxVec3 vel, double maxDis, doub
 void ParticleSystem::addRBEnemies(PxVec3 pos, PxVec3 vel, double maxDis, double maxTime, Vector4 color, float mass, vector<ForceGenerator*> fG) {
 	SolidoRigido* p = new SolidoRigido(this, _gPhysics, _gScene, &PxTransform(pos), vel, {0,0,0}, maxDis, maxTime, mass, color);
 	_solidosEnemigos.push_back(p);
-	std::cout << "Enemy position: " << pos.x << pos.y << pos.z
-		<< ", velocity: " << vel.x << vel.y << vel.z
-		<< ", force: " << fG[0]->_force.x << fG[0]->_force.y << fG[0]->_force.z
-		<< ", mass: " << mass << std::endl;
-	p->addForceGenerator(fG);
+	vector<ForceGenerator*> aux;
+	aux.push_back(new GravityGenerator(this, {0,0,0},{0,0,0}, {0,-10,0}));
+	p->addForceGenerator(aux);
 }
 
 
@@ -124,8 +125,8 @@ void ParticleSystem::addRandomEnemy() {
 }
 
 void ParticleSystem::checkDeath(Particle* p) {
-	if (p->checkDeath()) _particlesToErase.push_back(p);
-	else if(p->checkDis()) _particlesToErase.push_back(p);
+	if (p->checkDeath()) p->_maxTime = 0;
+	else if(p->checkDis()) p->_maxTime = 0;
 }
 
 void ParticleSystem::generateSpringDemo() {

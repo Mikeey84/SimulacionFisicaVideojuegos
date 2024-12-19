@@ -16,32 +16,39 @@ Generator::Generator(ParticleSystem* pS, Type type, PxVec3 pos, double time, dou
 void Generator::update(double t) {
 	_lastTimeAdd += t;
 	if (_lastTimeAdd > _time) {
+		
 		switch (_type) {
 		case UNIFORM:
-			_pS->addParticles(_pos, { generateUniform(_x1,_y1), generateUniform(_x2,_y2), generateUniform(_x3,_y3) }, 
-				{ 0.0f,0.0f,0.0f }, _maxDis, _maxTime, _c, _mass, _forces);
-			_lastTimeAdd = 0;
-			break;
+			if (_count < _maxCount) {
+				_pS->addParticles(_pos, { generateUniform(_x1,_y1), generateUniform(_x2,_y2), generateUniform(_x3,_y3) }, 
+					{ 0.0f,0.0f,0.0f }, _maxDis, _maxTime, {0.2,1,0.2,1}, _mass, _forces);
+				_lastTimeAdd = 0;
+				_count++;
+			}
+				break;
 		case GAUSS:
-			_pS->addParticles(_pos, { generateGauss(_x1, _y1), generateGauss(_x2,_y2), generateGauss(_x3, _y3) }, 
-				{ 0.0f,0.0f,0.0f }, _maxDis, _maxTime, _c, _mass, _forces);
-			_lastTimeAdd = 0;
+			if (_count < _maxCount) {
+				_pS->addParticles(_pos, { generateGauss(_x1, _y1), generateGauss(_x2,_y2), generateGauss(_x3, _y3) }, 
+					{ 0.0f,0.0f,0.0f }, _maxDis, _maxTime, _c, _mass, _forces);
+				_lastTimeAdd = 0;
+				_count++;
+			}
 			break;
 		case UNIFORM_RB: 
-			if (_count < _maxCount) {
-				_pS->addRBParticles(_pos, { generateUniform(_x1,_y1), generateUniform(_x2,_y2), generateUniform(_x3,_y3) },
-					{ 0.0f,0.0f,0.0f }, _maxDis, _maxTime, _c, _mass, _forces);
-				_lastTimeAdd = 0;
-				_count++;
-			}
+			
+			_pS->addRBParticles(_pos, { generateUniform(_x1,_y1), generateUniform(_x2,_y2), generateUniform(_x3,_y3) },
+				{ 0.0f,0.0f,0.0f }, _maxDis, _maxTime, _c, _mass, _forces);
+			_lastTimeAdd = 0;
+			_count++;
+			
 			break;
 		case GAUSS_RB:
-			if (_count < _maxCount) {
-				_pS->addRBParticles(_pos, { generateGauss(_x1, _y1), generateGauss(_x2,_y2), generateGauss(_x3, _y3) },
-					{ 0.0f,0.0f,0.0f }, _maxDis, _maxTime, _c, _mass, _forces);
-				_lastTimeAdd = 0;
-				_count++;
-			}
+			
+			_pS->addRBParticles(_pos, { generateGauss(_x1, _y1), generateGauss(_x2,_y2), generateGauss(_x3, _y3) },
+				{ 0.0f,0.0f,0.0f }, _maxDis, _maxTime, _c, _mass, _forces);
+			_lastTimeAdd = 0;
+			_count++;
+			
 			break;
 		case ENEMY:
 			if (_count < _maxCount) {
@@ -53,6 +60,7 @@ void Generator::update(double t) {
 			break;
 
 		}
+		
 	}
 }
 

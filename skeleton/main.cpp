@@ -17,8 +17,15 @@
 #include "GeneraEscenaFinal.h"
 
 std::string display_text = "PULSA \u0022ESPACIO\u0022 PARA EMPEZAR EL JUEGO";
+std::string display_text2 = "SHOOT`EM";
 
-
+float _scale = 0.5;
+float _scale2 = 1;
+float _w = 1920 / 2 - 500;
+float _w2 = 1920 - 400;
+float _h = 10;
+float _h2 = 1000;
+int sPuntos = 0;
 using namespace physx;
 
 PxDefaultAllocator		gAllocator;
@@ -52,27 +59,26 @@ Pistol* sPistol;
 Rafaga* sRafaga;
 
 GeneraEscenaFinal* EscenaFinal;
-int sPuntos = 0;
+
 
 void initGame() 
 {
 	display_text = "Puntos " + to_string(sPuntos);
-	changeText(0, 0, PxVec4(0,0,0,1));
+	display_text2 = "a";
+	_w2 = 10000;
+	_scale = 0.2;
+	_w = 4.4e3;
+	_h = 5e3;
 	//Armas
 	sPistol = new Pistol(sParticleSystem, GetCamera(), gPhysics, gScene, 50, 10, 0.5);
 	sParticleSystem->addGun(sPistol);
 	sRafaga = new Rafaga(sParticleSystem, GetCamera(), gPhysics, gScene, 0.1, 0.5, 3, 70, 10);
 	sParticleSystem->addGun(sRafaga);
 	sParticleSystem->addGenerator(Generator::ENEMY, PxVec3(0, 10, 0), 1, 10, 100, 0, 0, 0, 0, 0, 0, 10, 50);
-	sParticleSystem->_generators[0]->addForceGenerator(gravity);
+	//sParticleSystem->_generators[0]->addForceGenerator(gravity);
 	// Escena con las armas
 	EscenaFinal = new GeneraEscenaFinal(GetCamera(), sParticleSystem, gPhysics, gScene, sPistol, sRafaga);
 	EscenaFinal->_start = true;
-}
-
-void menuPrincipal() 
-{
-
 }
 
 
@@ -211,6 +217,17 @@ void initPhysics(bool interactive)
 	
 }
 
+void end() {
+	display_text = "Se acabo. Hiciste " + to_string(sPuntos) + " puntos!";
+	_scale = 1;
+	_w = 0;
+	_h = 500;
+	GetCamera()->_canLook = false;
+	GetCamera()->setEye({ 0,15,100 });
+	GetCamera()->setDir({ 0,0,1 });
+	sParticleSystem->addGenerator(Generator::UNIFORM, PxVec3(0, 0, 150), 1, 1.7, 10000, -10, 10, 20, 25, -10, 10, 1, 1);
+	
+}
 
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
@@ -228,8 +245,19 @@ void stepPhysics(bool interactive, double t) // pasar la t
 		}
 	}
 	sParticleSystem->update(t);
-	if(EscenaFinal != nullptr)
+	if (EscenaFinal != nullptr) {
 		EscenaFinal->update(t);
+		if (EscenaFinal->_start) {
+			EscenaFinal->_time += t;
+			if (EscenaFinal->_time > EscenaFinal->_maxTime) {
+				end();
+			}
+		}
+	}
+
+		
+
+	
 }
 
 // Function to clean data
@@ -266,17 +294,20 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case 'B': break;
 	//case ' ':	break;
 	case 'P':
-		sPistol->shoot();
+		if(sPistol != nullptr)
+			sPistol->shoot();
 		break;
 	case 'E':
-		
+
 		break;
 	case 'R':
-		sRafaga->shoot();
+		if (sRafaga != nullptr)
+			sRafaga->shoot();
 		break;
 	case ' ':
 	{
-		initGame();
+		if(!EscenaFinal)
+			initGame();
 		break;
 	}
 	default:

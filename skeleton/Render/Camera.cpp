@@ -76,9 +76,11 @@ bool Camera::handleKey(unsigned char key, int x, int y, float speed)
 
 void Camera::handleAnalogMove(float x, float y)
 {
-	PxVec3 viewY = mDir.cross(PxVec3(0,1,0)).getNormalized();
-	mEye += mDir*y;
-	mEye += viewY*x;
+	if (_canLook) {
+		PxVec3 viewY = mDir.cross(PxVec3(0,1,0)).getNormalized();
+		mEye += mDir*y;
+		mEye += viewY*x;
+	}
 }
 
 void Camera::handleMotion(int x, int y)

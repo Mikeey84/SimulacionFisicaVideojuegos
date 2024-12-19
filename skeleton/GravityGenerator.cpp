@@ -14,5 +14,5 @@ void GravityGenerator::update(double t, Particle* p) {
 
 Vector3 GravityGenerator::getForce(Vector3 pos)
 {
-	return Vector3();
+	return _force;
 }
