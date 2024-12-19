@@ -68,7 +68,7 @@ GeneraEscenaFinal* EscenaFinal;
 void initGame() 
 {
 	display_text = "Puntos " + to_string(sPuntos);
-	display_text2 = "Rafaga = R Curvo P";
+	display_text2 = "Rafaga R Curvo P";
 	_w2 = 0;
 	_h2 = 500;
 	_scale = 0.4;
